@@ -1,0 +1,14 @@
+slot_date,slot_time_ist,day,draft_id,family,subject,status,owner
+2026-10-26,08:30,Monday,SP-006,P,Born Unicorn,drafted,manager
+2026-10-28,08:30,Wednesday,SP-010,N,Puneet,drafted,manager
+2026-10-30,08:30,Friday,SP-007,P,Puneet,drafted,manager
+2026-11-02,08:30,Monday,SP-001,P,Clensta,drafted,manager
+2026-11-06,08:30,Friday,SP-002,P,Clensta,drafted,manager
+2026-11-08,09:00,Sunday,SP-007-F,FESTIVAL,Diwali,not started,founder
+2026-11-09,08:30,Monday,SP-003,P,Puneet,drafted,manager
+2026-11-11,08:30,Wednesday,SP-004,P,Puneet,drafted,manager
+2026-11-13,08:30,Friday,SP-005,P,Puneet,drafted,manager
+2026-11-16,08:30,Monday,SP-008,P,Born Unicorn,drafted,manager
+2026-11-18,08:30,Wednesday,SP-009,P,Born Unicorn,drafted,manager
+TBD,08:30,TBD,N-01,N,founder craft,held - no capture yet,founder
+TBD,08:30,TBD,N-02,N,current build,held - no capture yet,founder

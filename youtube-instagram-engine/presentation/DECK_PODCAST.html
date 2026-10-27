@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podcast with Puneet — strategy</title>
+<style>
+  :root{--paper:#FFFFFF;--ink:#111111;--muted:#5C5C5C;--dim:#8A8A8A;--hair:#CFCFCF;--soft:#F5F4F1}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
+  body{overflow:hidden}
+  .deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;
+    padding:7vh 8vw 10vh;opacity:0;transition:opacity .16s ease}
+  .slide.on{display:flex;opacity:1}
+  .sans{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+
+  h1{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;
+    font-size:clamp(2.6rem,5.2vw,4.8rem);line-height:1.02;letter-spacing:-.015em;margin:0 0 2.6vh}
+  h2{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;
+    font-size:clamp(1.5rem,2.7vw,2.5rem);line-height:1.08;letter-spacing:-.01em;margin:0 0 2.8vh}
+  p{margin:0 0 1.6vh;font-size:clamp(.88rem,1.1vw,1.04rem);line-height:1.6;max-width:68ch}
+  .lede{font-size:clamp(1rem,1.5vw,1.4rem);line-height:1.5;max-width:56ch}
+  .small{font-size:.76rem;color:var(--muted);line-height:1.55;max-width:80ch}
+  .note{font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.5;max-width:70ch}
+  .rule{height:1px;background:var(--hair);border:0;margin:3vh 0}
+
+  /* tag + accent block */
+  .tag{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--ink);
+    padding:.25vh .5vw;vertical-align:middle;margin-left:.6vw;font-style:normal;color:var(--ink)}
+  .accent{border-left:2px solid var(--ink);padding-left:1.1vw}
+
+  /* cover */
+  .cover-row{display:flex;align-items:center;gap:2.2vw;margin-bottom:1.6vh}
+  .disc{width:6.2vw;height:6.2vw;min-width:64px;min-height:64px;border:1px solid var(--ink);border-radius:50%;
+    background:#fff;display:grid;place-items:center;font-family:"Didot",Georgia,serif;
+    font-size:clamp(.9rem,1.7vw,1.5rem);flex:none}
+  .for{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .for b{color:var(--ink);font-weight:600}
+  .cover h1{font-size:clamp(3.2rem,7.4vw,7rem);margin:0}
+  .cover .sub{font-family:"Didot",Georgia,serif;font-style:italic;font-size:clamp(1rem,1.9vw,1.7rem);
+    color:var(--muted);margin-top:1.2vh}
+
+  .cols{display:grid;grid-template-columns:minmax(16ch,28ch) 1fr;gap:0 4.5vw;align-items:center}
+
+  /* persona axes */
+  .axes{position:relative;height:46vh}
+  .ax-line{position:absolute;background:var(--ink)}
+  .lbl{position:absolute;font-family:"Didot",Georgia,serif;font-size:1.15rem;background:#fff;padding:.4vh .7ch}
+
+  /* anti positioning tree */
+  .tree{position:relative;height:28vh;margin-top:1vh}
+  .tree .top{position:absolute;left:50%;top:0;transform:translateX(-50%);
+    font-family:"Didot",Georgia,serif;font-size:clamp(1.8rem,3vw,2.6rem);text-align:center;line-height:1.05}
+  .tree .stem{position:absolute;left:50%;top:10.5vh;height:3vh;width:1px;background:var(--ink)}
+  .tree .bar{position:absolute;top:13.5vh;height:1px;background:var(--ink);left:16%;right:16%}
+  .tree .drop{position:absolute;top:13.5vh;height:3vh;width:1px;background:var(--ink)}
+  .tree .end{position:absolute;top:17.5vh;width:26%;text-align:center;font-family:"Didot",Georgia,serif;
+    font-size:1.1rem;line-height:1.3}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;text-align:left;
+    font-weight:500;color:var(--dim);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:.9vh .9vw;border:1px solid var(--ink)}
+  td{padding:.85vh .9vw;border:1px solid var(--ink);vertical-align:middle}
+  td.n{width:5ch;color:var(--dim);font-size:.8rem}
+  td.p{font-family:"Didot",Georgia,serif;font-size:1rem}
+  td.p .sub{display:block;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-top:.35vh}
+  td.r{text-align:right;color:var(--muted);font-size:.84rem;white-space:nowrap;width:9ch}
+  tr.addrow td{background:var(--soft)}
+
+  /* domain cards */
+  .grid{display:grid;gap:1.8vh 2vw}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{border:1px solid var(--ink);padding:2vh 1.3vw;background:#fff}
+  .card.soft{border-color:var(--hair)}
+  .card .fig{font-family:"Didot",Georgia,serif;font-size:1.15rem;margin-bottom:.8vh}
+  .card p{font-size:.78rem;color:var(--muted);margin:0;max-width:none;line-height:1.5}
+  .card ul{margin:0;padding:0;list-style:none}
+  .card li{font-size:.86rem;line-height:1.75}
+
+  /* pillar slide */
+  .pill{display:grid;grid-template-columns:minmax(17ch,23ch) 1fr;gap:0 3.6vw;align-items:start}
+  .pill .idx{font-family:"Didot",Georgia,serif;font-size:2.4rem;line-height:1;color:var(--dim);margin-bottom:1.2vh}
+  .pill h1{font-size:clamp(1.8rem,3.1vw,2.9rem);margin-bottom:1.8vh}
+  .meta{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);line-height:2.1}
+  .pill h4{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.58rem;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 .7vh;font-weight:500}
+  .pill .block{margin-bottom:2.1vh}
+  .pill .block p{font-size:clamp(.84rem,1.02vw,.98rem);margin:0;line-height:1.55}
+  .eps{list-style:none;margin:.9vh 0 0;padding:0}
+  .eps li{font-style:italic;font-size:.86rem;padding-left:1.6ch;text-indent:-1.6ch;line-height:1.55}
+  .eps li:before{content:"— ";color:var(--dim);font-style:normal}
+  .refs a{color:var(--ink);font-size:.78rem;text-decoration:underline;text-underline-offset:2px;
+    text-decoration-color:var(--hair);margin-right:1.4vw;line-height:1.9;display:inline-block}
+  .refs a:hover{text-decoration-color:var(--ink)}
+
+  /* podcast theme loop */
+  .loop{display:grid;grid-template-columns:1fr 8vw 1fr;grid-template-rows:auto 7vh auto;
+    max-width:62vw;margin:2vh auto 0;align-items:center}
+  .box{border:1px solid var(--ink);padding:2vh 1.4vw;min-height:13vh}
+  .box h4{font-family:"Didot",Georgia,serif;font-weight:400;font-size:1.1rem;margin:0 0 .8vh}
+  .box p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+  .arr{font-family:-apple-system,sans-serif;color:var(--ink);text-align:center;font-size:1.1rem;letter-spacing:.2em}
+  .arr.v{grid-column:3;text-align:center}
+
+  .divider h1{font-size:clamp(3rem,6.4vw,6rem)}
+
+  /* cadence + process */
+  .bul{list-style:none;margin:0;padding:0}
+  .bul li{font-family:"Didot",Georgia,serif;font-size:1.3rem;line-height:1.9}
+  .bul li:before{content:"• ";color:var(--dim)}
+  .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stage{border:1px solid var(--ink);margin-left:-1px}
+  .stage .hd{background:var(--ink);color:#fff;font-family:"Didot",Georgia,serif;font-size:1.15rem;
+    text-align:center;padding:1.4vh 0}
+  .stage ul{list-style:none;margin:0;padding:1.6vh 1.2vw}
+  .stage li{font-size:.86rem;line-height:2}
+
+  /* furniture */
+  .mono-mini{position:absolute;left:8vw;bottom:3.6vh;width:2.5vw;height:2.5vw;min-width:26px;min-height:26px;
+    border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;
+    font-family:"Didot",Georgia,serif;font-size:.62rem}
+  .pagenum{position:absolute;right:8vw;bottom:3.8vh;font-family:-apple-system,sans-serif;font-size:.6rem;
+    letter-spacing:.14em;color:var(--dim)}
+  .wordmark{position:absolute;left:50%;bottom:3.8vh;transform:translateX(-50%);
+    font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.2em;color:var(--dim)}
+  .bar{position:absolute;left:0;bottom:0;height:1.5px;background:var(--ink);transition:width .16s ease}
+  .idxt td{padding:.6vh .9vw}
+  td.trk{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.6rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;width:20ch}
+  .mixt td{text-align:center;font-family:"Didot",Georgia,serif;font-size:1.15rem;padding:1.3vh .9vw}
+  .mixt td.p{text-align:left;font-size:1.05rem}
+  .mixt th{text-align:center}.mixt th:first-child{text-align:left}
+
+  .ptab td{vertical-align:top;padding:1.1vh .9vw}
+  .ptab td.p{font-size:1.08rem;width:19ch}
+  .ptab td.i{font-size:.82rem;color:var(--ink);line-height:1.5}
+  .ptab td.e{font-size:.8rem;font-style:italic;line-height:1.55}
+  .ptab td.e div{padding-left:1.4ch;text-indent:-1.4ch}
+  .ptab td.e div:before{content:"\2014  ";font-style:normal;color:var(--dim)}
+  .ptab td.f{font-size:.74rem;color:var(--muted);line-height:1.5;width:22ch}
+  .ptab th.w{width:19ch}
+  .trk-h{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.6rem;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 1vh}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:0 2vw}
+  .two .card p{font-size:.84rem}
+  .two .card li{font-size:.84rem;line-height:1.7}
+  .slide.pillslide{justify-content:flex-start;padding-top:19vh}
+  .pill .block p{max-width:84ch}
+  .pill .side{margin-top:3vh}
+  .pill .side h4{margin-top:1.6vh}
+  .pill .side p{font-size:.72rem;color:var(--muted);line-height:1.5;margin:0;max-width:24ch}
+  .why .stage li{line-height:1.55;padding:.4vh 0}
+  .plbl{position:absolute;background:#fff;padding:.4vh .6ch}
+  .plbl .pw{font-family:"Didot","Bodoni 72",Georgia,serif;font-size:1.25rem}
+  .pp{font-family:Georgia,serif;font-size:.72rem;color:var(--muted);line-height:1.45;margin-top:.5vh;font-style:normal}
+  .refs .rp{font-family:-apple-system,sans-serif;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-right:.3vw}
+  .pill .refs a{font-size:.74rem;margin-right:1.2vw;line-height:1.75}
+  .fact td{padding:.75vh .9vw}
+  .fact td.p{font-size:.92rem;width:30ch}
+  .fact td.i{font-size:.76rem;color:var(--muted)}
+  .fact td.f{width:24ch;font-size:.72rem}
+  .st{font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--ink);padding:.2vh .5vw;white-space:nowrap}
+
+  /* ---- interactive layer ---- */
+  .chip{position:absolute;left:8vw;top:3.6vh;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);z-index:5}
+  .ctrl{position:absolute;right:8vw;top:3vh;display:flex;gap:.5vw;z-index:6}
+  .ctrl button{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.56rem;
+    letter-spacing:.18em;text-transform:uppercase;background:#fff;border:1px solid var(--hair);color:var(--muted);
+    padding:.6vh .8vw;cursor:pointer}
+  .ctrl button:hover,.ctrl button.on{border-color:var(--ink);color:var(--ink)}
+  .frag{opacity:.1;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+  .frag.in{opacity:1;transform:none}
+  tr[data-goto]{cursor:pointer}
+  tr[data-goto]:hover td{background:var(--soft)}
+  tr[data-goto] td.r:after{content:"  →";color:var(--dim)}
+  .mixt tr:hover td{background:var(--soft)}
+  .overlay{position:fixed;inset:0;background:#fff;z-index:20;display:none;padding:8vh 8vw;overflow:auto}
+  .overlay.on{display:block}
+  .overlay h3{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;font-size:2rem;margin:0 0 3vh}
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2vh 2vw}
+  .menu-grid a{display:block;border:1px solid var(--hair);padding:1.4vh 1vw;color:var(--ink);text-decoration:none;cursor:pointer}
+  .menu-grid a:hover,.menu-grid a.cur{border-color:var(--ink)}
+  .menu-grid .mn{font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+  .menu-grid .mt{font-family:"Didot",Georgia,serif;font-size:1.05rem;margin-top:.4vh}
+  .keys td{border:0;border-bottom:1px solid var(--hair);padding:1vh 1vw;font-size:.9rem}
+  .keys td:first-child{font-family:-apple-system,sans-serif;font-size:.7rem;letter-spacing:.12em;width:16ch}
+  .notes{position:fixed;left:0;right:0;bottom:0;background:#111;color:#eee;z-index:15;display:none;
+    padding:2vh 8vw 2.4vh;font-size:.92rem;line-height:1.55;max-height:34vh;overflow:auto}
+  .notes.on{display:block}
+  .notes .nh{font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#999;
+    display:flex;justify-content:space-between;margin-bottom:.8vh}
+  .donut{width:9vh;height:9vh;border-radius:50%;flex:none;
+    background:conic-gradient(var(--ink) 0 38.5%,var(--hair) 38.5% 100%);position:relative}
+  .donut:after{content:"";position:absolute;inset:22%;background:#fff;border-radius:50%}
+  .verify{display:inline-block;font-family:-apple-system,sans-serif;font-size:.5rem;letter-spacing:.16em;
+    text-transform:uppercase;border:1px dashed var(--dim);color:var(--muted);padding:.1vh .4vw;margin-left:.4vw;vertical-align:middle}
+  @media print{.ctrl,.chip,.notes,.overlay{display:none!important}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+<!-- 1 -->
+<section class="slide">
+  <div class="cover-row"><div class="disc">PG</div><div class="for">Podcast <b>strategy</b></div></div>
+  <h1>Podcast<br>with Puneet</h1>
+  <div class="sub">Long-form conversations on India's security, building and future</div>
+  <p class="small" style="margin-top:5vh">Its own YouTube channel and its own clips handle. The personal channel is a separate deck.</p>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <h1>Vision</h1>
+  <p class="lede" style="max-width:60ch">To make the podcast the place where India's national security, founders, capital and AI are discussed by people who have been inside them.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="cols">
+    <div>
+      <div class="trk-h">A strategic choice</div>
+      <h1 style="margin:0 0 2vh">Brand<br>Persona</h1>
+      <p class="small" style="max-width:30ch">The same host, the same persona as his personal channel: how guests and viewers should experience him.</p>
+    </div>
+    <div class="axes" style="height:58vh">
+      <div class="ax-line" style="left:33%;right:33%;top:50%;height:1px"></div>
+      <div class="ax-line" style="top:24%;bottom:24%;left:50%;width:1px"></div>
+      <div class="disc" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)">PG</div>
+      <div class="plbl" style="left:50%;top:0;transform:translateX(-50%);width:34ch;text-align:center"><div class="pw">Veteran</div><div class="pp">19 years building, 8 of them in defence technology. An industry veteran, not a military one.</div></div>
+      <div class="plbl" style="left:68%;top:50%;transform:translateY(-50%);width:24ch;text-align:left"><div class="pw">Credible</div><div class="pp">National Entrepreneurship Award, 2019 · ₹20 crore+ Series A, 2021 · an IIT Delhi-incubated company</div></div>
+      <div class="plbl" style="right:68%;top:50%;transform:translateY(-50%);width:24ch;text-align:right"><div class="pw">Strategic</div><div class="pp">Head of strategy at TAK · a Born Unicorn jury seat · his own decision frameworks</div></div>
+      <div class="plbl" style="left:50%;bottom:0;transform:translateX(-50%);width:34ch;text-align:center"><div class="pw">Approachable</div><div class="pp">Plain language; warm and self-deprecating, as in his own writing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="trk-h" style="text-align:center">Guardrails</div>
+  <div class="tree" style="height:44vh">
+    <div class="top">Anti<br>Positioning</div>
+    <div class="stem"></div>
+    <div class="bar"></div>
+    <div class="drop" style="left:16%"></div>
+    <div class="drop" style="left:50%"></div>
+    <div class="drop" style="left:84%"></div>
+    <div class="end" style="left:3%"><div>Sounding<br>Preachy</div><div class="pp" style="margin-top:1.2vh">The guest's story leads; the host asks, he does not lecture.</div></div>
+    <div class="end" style="left:37%"><div>Pro-politics<br>Narrative</div><div class="pp" style="margin-top:1.2vh">Policy yes, party politics no. Guests in or near public office are briefed on this before recording.</div></div>
+    <div class="end" style="left:71%"><div>Typical<br>Motivator</div><div class="pp" style="margin-top:1.2vh">No hustle quotes. Every insight is tied to a real decision the guest made.</div></div>
+  </div>
+  <p class="note" style="margin:0 auto;text-align:center">What the show refuses to sound like. Every episode, clip and title is checked against these three.</p>
+</section>
+
+<!-- 5 -->
+<section class="slide divider" style="align-items:center;text-align:center">
+  <h1>Content Strategy</h1>
+  <div class="sans" style="letter-spacing:.3em;font-size:.7rem;color:var(--dim)">PODCAST</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="cols">
+    <h1 style="margin:0">Content<br>Index</h1>
+    <div>
+      <p class="small" style="margin:0 0 1.6vh">One show, five guest lanes. Defence is the core; the other four widen the audience.</p>
+      <table class="idxt"><tr><th>#</th><th>Section</th><th style="text-align:right">Slide</th></tr>
+      <tr data-goto="7"><td class="n">1</td><td class="p">The idea</td><td class="r">7</td></tr>
+<tr data-goto="8"><td class="n">2</td><td class="p">What the episodes are · five guest lanes</td><td class="r">8</td></tr>
+<tr data-goto="9"><td class="n">3</td><td class="p">Probable guests</td><td class="r">9</td></tr>
+<tr data-goto="10"><td class="n">4</td><td class="p">Strategic theme</td><td class="r">10</td></tr>
+<tr data-goto="11"><td class="n">5</td><td class="p">Clips and monthly cadence</td><td class="r">11 – 12</td></tr>
+<tr data-goto="14"><td class="n">6</td><td class="p">Why: growth &amp; engagement</td><td class="r">14</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      
+      <h1>Podcast<br>with Puneet</h1>
+      <div class="meta">Long form · 60–75 min<br>Defence · founder<br>Investor · AI</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Long-form conversations (60-75 mins) with soldiers, intelligence professionals, military
+        leaders, veterans, defence innovators, diplomats, and strategic thinkers to understand the
+        human stories, decisions, sacrifices, and lessons behind India's national security
+        ecosystem.</p></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Very few Indian podcasts are dedicated to this niche; Monks &amp; Warriors is one. Raj Shamani, Prakhar Gupta and Ranveer Allahbadia cover it in parts, without a host from the sector. Puneet's years building defence technology give him the USP of drawing out the best insights from these guests.</p></div>
+      <div class="block accent"><h4>Wider chair</h4>
+        <p>The same chair also hosts founders, investors and AI builders who work on India's security
+        and technology. No Indian show combines a defence insider with an operator who has built,
+        raised and exited.</p></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://youtu.be/5CU8rT6O9qI" target="_blank">Untold Combat Stories ft. Col. Hemonto Panging</a>
+        <a href="https://youtu.be/hwTK3IWxcyY" target="_blank">Hav Liyakat Ali, SM — Monks &amp; Warriors</a><a href="https://www.youtube.com/watch?v=y5Ewu8wYgqM" target="_blank">Nikhil Kamath ft. Aravind Srinivas — WTF</a><a href="https://www.youtube.com/watch?v=QY6yHJC2DIE" target="_blank">Raj Shamani ft. Aravind Srinivas — Figuring Out</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="trk-h">What the episodes are</div>
+  <h2>Five guest lanes</h2>
+  <table class="ptab">
+    <tr><th>Lane</th><th>Who sits in the chair</th><th>Example episodes</th></tr>
+    <tr><td class="p">Defence</td><td class="i">Military leaders, special forces, veterans, intelligence specialists</td><td class="e"><div>What a commander decides in the first hour of a crisis</div><div>How intelligence helped India prepare for the 1971 war</div></td></tr><tr><td class="p">Entrepreneurship</td><td class="i">Founders building in defence and deep tech; incubator leaders</td><td class="e"><div>What an incubator sees first in a deep-tech founder</div><div>From lab to first defence order</div></td></tr><tr><td class="p">Investor</td><td class="i">Investors, juries, ecosystem leaders</td><td class="e"><div>Why private capital still avoids Indian defence-tech</div><div>What a jury weighs between the Top 30 and the final six</div></td></tr><tr><td class="p">Founder</td><td class="i">Operators who have scaled a team, a board and an exit; performers turned founders</td><td class="e"><div>What breaks first when a company scales its team</div><div>From performance to entrepreneurship: what carries over</div></td></tr><tr><td class="p">AI</td><td class="i">Researchers, authors and builders on compute and sovereignty</td><td class="e"><div>India’s AI choices, and who makes them</div><div>Who owns India’s compute?</div></td></tr>
+  </table>
+  <p class="note" style="margin-top:2vh">Every guest is invited by Puneet's team and confirmed in writing before they are named anywhere.</p>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <h2 style="text-align:center">Probable Guests</h2>
+  <div class="grid g3">
+    <div class="card soft"><div class="fig">Military Leaders</div><ul>
+      <li>Lt Gen K.J.S. Dhillon</li><li>Air Marshal Anil Chopra</li><li>Vice Admiral Shekhar Sinha</li></ul></div>
+    <div class="card soft"><div class="fig">Defence Analysts</div><ul>
+      <li>Admiral Arun Prakash</li><li>Bharat Karnad</li><li>Pravin Sawhney</li><li>Brahma Chellaney</li></ul></div>
+    <div class="card"><div class="fig">Founders &amp; Investors</div><ul>
+      <li>Rahul Agarwal — RASA Group</li><li>Radhika Gupta — Edelweiss MF</li><li>Anuj Khandelwal</li><li>Bhuvneshwar Kumar — performance to entrepreneurship</li><li>Alok Pandey — AIC IIT Delhi</li></ul></div>
+    <div class="card soft"><div class="fig">Special Forces &amp; Veterans</div><ul>
+      <li>Lt Col Deepika Rathore</li><li>Major Gaurav Arya</li><li>Major Gen G.D. Bakshi</li></ul></div>
+    <div class="card soft"><div class="fig">Intelligence Specialist</div><ul>
+      <li>Vikram Sood</li><li>Amarjit Singh Dulat</li><li>Pankaj Saran</li></ul></div>
+    <div class="card"><div class="fig">AI &amp; Tech Builders</div><ul>
+      <li>Prof. V. Ramgopal Rao — BITS Pilani</li><li>Dr Nikhil Agarwal — FITT, IIT Delhi</li></ul></div>
+  </div>
+  <p class="note" style="margin-top:2vh">Founder, investor and AI names are people he has met or worked with. Designations checked October 2026. Every guest still needs to be invited and confirmed.</p>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="trk-h" style="text-align:center">Strategic theme · every episode</div>
+  <h2 style="text-align:center">Podcast Theme</h2>
+  <div class="loop">
+    <div class="box"><h4>About the Person</h4><p>Emotional connection</p></div>
+    <div class="arr">→</div>
+    <div class="box"><h4>Professional Life</h4><p>Storytelling and suspense</p></div>
+    <div></div><div></div><div class="arr v">↓</div>
+    <div class="box"><h4>Future</h4><p>Tech, AI, hope and vision</p></div>
+    <div class="arr">←</div>
+    <div class="box"><h4>Insights</h4><p>National security</p>
+      <p class="accent" style="margin-top:.8vh;color:var(--ink)">+ building, capital and AI</p></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <h2>Podcast Clips</h2>
+  <ul class="bul"><li>A dedicated Instagram page for podcast clips.</li>
+  <li>10–12 clips a month, cut from the two episodes.</li></ul>
+  <p class="small" style="margin-top:3vh">The podcast channel and its clips handle are separate from @puneetgbuilds, so the personal channel keeps its own audience and its own voice.</p>
+  <div class="refs" style="margin-top:2vh"><span class="small">Reference</span><br>
+    <a href="https://youtube.com/@pgxclips" target="_blank" style="color:var(--ink);font-size:.86rem">@pgxclips</a></div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <h2>Monthly Cadence</h2>
+  <div class="grid g3" style="align-items:start">
+    <div><div class="meta" style="margin-bottom:1vh">Podcast channel</div>
+      <ul class="bul"><li>2 episodes</li><li>60–75 min each</li></ul></div>
+    <div><div class="meta" style="margin-bottom:1vh">Clips handle</div>
+      <ul class="bul"><li>10–12 clips</li></ul></div>
+    <div><div class="meta" style="margin-bottom:1vh">Guest mix</div>
+      <ul class="bul"><li>1 defence and strategy</li><li>1 building, capital or AI</li></ul></div>
+  </div>
+  <p class="note" style="margin-top:4vh">The mix keeps defence as the core without making the podcast a defence-only show.</p>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <h2>Process</h2>
+  <div class="proc">
+    <div class="stage"><div class="hd">Pre Prod</div><ul><li>Strategy</li><li>Ideation</li><li>Keyword Research</li><li>Content Research</li><li>Scripting</li><li>Audio Cloning</li><li>Video Cloning</li></ul></div>
+    <div class="stage"><div class="hd">Prod</div><ul><li>Locations</li><li>Setup</li><li>Equipment</li><li>Shooting</li><li>Content Direction</li></ul></div>
+    <div class="stage"><div class="hd">Post Prod</div><ul><li>Editing</li><li>Covers/Thumbnails</li><li>Titles</li><li>Repurposing</li><li>Captions/Descriptions</li></ul></div>
+    <div class="stage"><div class="hd">Post Publish</div><ul><li>Tracking of Key Metrics</li><li>Monthly Actionable Reports</li></ul></div>
+  </div>
+  <p class="note accent" style="margin-top:3vh;font-style:normal;color:var(--ink)">Two checks before
+  anything publishes: every fact traced to the public record, every guest confirmed in writing, and Puneet's explicit yes.</p>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <div class="trk-h">Why · growth and engagement</div>
+  <h2>Why this plan grows the podcast</h2>
+  <div class="proc why"><div class="stage frag"><div class="hd">Discover</div><ul><li>Clips on the dedicated handle; every guest shares the episode with their own audience</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: clip views, reach, new viewers</li></ul></div><div class="stage frag"><div class="hd">Watch</div><ul><li>The four-box arc: the person first, then suspense, so viewers stay through 60–75 minutes</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: watch time, retention</li></ul></div><div class="stage frag"><div class="hd">Engage</div><ul><li>The insights segment invites debate; viewers suggest the next guest in the comments</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: comments, shares</li></ul></div><div class="stage frag"><div class="hd">Follow</div><ul><li>Two episodes a month; five lanes bring founders, investors and AI viewers, not only defence</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: subscribers gained</li></ul></div></div>
+  <p class="note accent" style="margin-top:3vh;font-style:normal;color:var(--ink)">Guests are the growth engine: each one brings an audience the channel did not have. That is why the lanes widen beyond defence.</p>
+</section>
+
+<!-- 15 -->
+<section class="slide divider">
+  <div class="trk-h">For your decision</div>
+  <h1>Three answers<br>to move ahead.</h1>
+  <ul class="bul" style="margin-top:2vh"><li>Your first three guests</li><li>One clips handle, separate from @puneetgbuilds?</li><li>One defence and one wider episode a month?</li></ul>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <div class="trk-h">Appendix</div>
+  <h2>Guest check, October 2026</h2>
+  <table class="ptab fact">
+    <tr><th>Name</th><th>Current public role</th><th>What changed</th></tr>
+    <tr><td class="p">Lt Gen Syed Ata Hasnain</td><td class="i">Governor of Bihar since March 2026</td><td class="f">Removed: a constitutional office, unlikely to be bookable</td></tr><tr><td class="p">Dr Ajay Kumar</td><td class="i">Chairman, UPSC; author of <i>AI Nation</i></td><td class="f">Removed for now: a constitutional office</td></tr><tr><td class="p">Deepika Rathore</td><td class="i">Now Lt Col, VSM; twice up Everest (2013, 2016)</td><td class="f">Rank corrected</td></tr><tr><td class="p">Bharat Karnad · Pravin Sawhney</td><td class="i">CPR emeritus professor · editor, FORCE</td><td class="f">Never in the same episode</td></tr><tr><td class="p">A.S. Dulat</td><td class="i">Former Secretary, R&amp;AW; author</td><td class="f">Politically sensitive: brief carefully</td></tr><tr><td class="p">Dr Nikhil Agarwal</td><td class="i">MD, FITT IIT Delhi; independent director, HAL</td><td class="f">FITT supported Clensta: disclose on air</td></tr><tr><td class="p">Bhuvneshwar Kumar</td><td class="i">India cricketer; Puneet moderated his IIT Delhi FITT session, Sep 2026</td><td class="f">Added: that post was Puneet's highest engagement rate of the year</td></tr><tr><td class="p">Air Marshal Anil Chopra</td><td class="i">Former DG, Centre for Air Power Studies</td><td class="f">Two officers share the name: use the right bio</td></tr>
+  </table>
+  <p class="note" style="margin-top:1.6vh">Every guest on the list was checked against public sources. Nobody is approached until Puneet agrees the list.</p>
+</section>
+
+<div class="chip" id="chip"></div>
+<div class="ctrl"><button id="bmenu" title="Slide menu (M)">Menu</button><button id="bnotes" title="Speaker notes (N)">Notes</button><button id="bfull" title="Fullscreen (F)">Full screen</button><button id="bhelp" title="Keys (?)">?</button></div>
+<div class="mono-mini">PG</div>
+<div class="wordmark">podcast with puneet · strategy</div>
+<div class="pagenum" id="pg">1 / 16</div>
+<div class="bar" id="bar"></div>
+</div>
+<div class="overlay" id="menu"><h3>All slides</h3><div class="menu-grid" id="mgrid"></div></div>
+<div class="overlay" id="help"><h3>Presenting</h3><table class="keys">
+<tr><td>→ · SPACE · CLICK RIGHT</td><td>Next step or slide (some slides reveal step by step)</td></tr>
+<tr><td>← · CLICK LEFT</td><td>Back</td></tr>
+<tr><td>M</td><td>Slide menu: jump to any slide</td></tr>
+<tr><td>N</td><td>Speaker notes and a running timer (for the presenter's screen)</td></tr>
+<tr><td>F</td><td>Full screen</td></tr>
+<tr><td>INDEX ROWS</td><td>Click any row on a Content Index to jump to that slide</td></tr>
+<tr><td>ESC</td><td>Close any panel</td></tr></table></div>
+<div class="notes" id="notes"><div class="nh"><span id="nslide"></span><span>Elapsed <span id="ntime">0:00</span></span></div><div id="ntext"></div></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var NOTES={"1": "<b>Say:</b> \"The plan for the podcast. Its own YouTube channel and its own clips handle.\"", "2": "<b>Say:</b> \"The place where national security, founders, capital and AI are discussed by people who have been inside them.\"", "3": "<b>Say:</b> \"The same host, the same persona as your personal channel, each word backed by your record. Veteran here means nineteen years in industry, eight in defence technology. With real veterans across the table, the slide spells that out so nobody reads it as military service.\"", "4": "<b>Say:</b> \"Three guardrails for the show. The guest's story leads and the host doesn't lecture. Policy yes, party politics no, and guests in or near public office are briefed on that before recording. No hustle quotes: every insight is tied to a real decision the guest made.\"", "5": "<b>Say:</b> \"Now the strategy for the show.\"", "6": "<b>Say:</b> \"The idea, what the episodes are, who we invite, the theme every episode follows, clips and cadence, and why it grows.\"", "7": "<b>Say:</b> \"Sixty to seventy-five minute conversations on the human stories and decisions behind India's security. Very few Indian shows are dedicated to it, and none has a host who built defence technology, and the same chair also hosts founders, investors and AI builders.\"", "8": "<b>Say:</b> \"Five lanes, two example episodes each. Defence is the core; the other four widen the audience. Every guest is confirmed in writing before being named.\"", "9": "<b>Say:</b> \"Six guest groups. Nobody is approached until you agree the list.\" <b>Ask him:</b> \"Which three would you want first?\"", "10": "<b>Say:</b> \"Every episode follows one arc: the person, their professional life, the insights, the future. Viewers know what to expect and still get surprised.\"", "11": "<b>Say:</b> \"Ten to twelve clips a month on a dedicated Instagram page, separate from your personal handle.\"", "12": "<b>Say:</b> \"Two episodes a month: one defence and strategy, one building, capital or AI.\"", "13": "<b>Say:</b> \"Every fact checked, every guest confirmed in writing, nothing published without your yes.\"", "14": "<b>Say:</b> \"Clips and the guests' own audiences bring people in. The arc keeps them watching for an hour. The insights segment starts debate in the comments. Five lanes turn defence viewers and founder viewers into subscribers. Guests are the growth engine: each one brings an audience the channel didn't have.\"", "15": "<b>Say:</b> \"Three answers and we start guest outreach: your first three guests, one clips handle separate from @puneetgbuilds, and one defence plus one wider episode a month?\" <b>Then stop talking.</b>", "16": "<b>Use only if asked.</b> Lt Gen Hasnain is now Governor of Bihar and Dr Ajay Kumar is UPSC Chairman, so both are off the list for now. Deepika Rathore is now Lt Col. Never pair Karnad and Sawhney. Dulat is politically sensitive. FITT supported Clensta, so disclose that if Dr Nikhil Agarwal appears. Bhuvneshwar Kumar is added because Puneet moderated his FITT session in Sep 2026, Puneet's highest engagement-rate post of the year.<br><br>---"}, SECS=["Podcast", "Positioning", "Positioning", "Positioning", "Content strategy", "Content index", "The idea", "What the episodes are", "Probable guests", "Strategic theme", "Clips", "Cadence", "Process", "Why \u00b7 growth & engagement", "Decision", "Appendix"];
+  var i=0,n=slides.length,t0=null;
+  var $=function(id){return document.getElementById(id);};
+  function frags(){return [].slice.call(slides[i].querySelectorAll('.frag'));}
+  function title(s){var h=s.querySelector('h1,h2,.top');if(!h)return '';var d=document.createElement('div');
+    d.innerHTML=h.innerHTML.replace(/<br\s*\/?>/gi,' ');return d.textContent.replace(/\s+/g,' ').trim();}
+  function show(k,back){
+    i=Math.max(0,Math.min(n-1,k));
+    slides.forEach(function(s,j){s.classList.toggle('on',j===i);});
+    frags().forEach(function(f){f.classList.toggle('in',!!back);});
+    $('pg').textContent=(i+1)+' / '+n;
+    $('bar').style.width=((i+1)/n*100)+'%';
+    $('chip').textContent=SECS[i]||'';
+    $('ntext').innerHTML=NOTES[i+1]||'<span style="color:#888">No notes for this slide.</span>';
+    $('nslide').textContent='Slide '+(i+1)+' · '+title(slides[i]);
+    if(history.replaceState){history.replaceState(null,'','#'+(i+1));}
+  }
+  function steps(){var m={};frags().forEach(function(x,j){var k=x.getAttribute('data-s');k=k===null?j:parseInt(k,10);
+    (m[k]=m[k]||[]).push(x);});return Object.keys(m).map(Number).sort(function(a,b){return a-b;}).map(function(k){return m[k];});}
+  function next(){var st=steps();for(var j=0;j<st.length;j++){if(!st[j][0].classList.contains('in')){
+    st[j].forEach(function(x){x.classList.add('in');});return;}}show(i+1);}
+  function prev(){var st=steps();for(var j=st.length-1;j>=0;j--){if(st[j][0].classList.contains('in')){
+    st[j].forEach(function(x){x.classList.remove('in');});return;}}show(i-1,true);}
+  function toggle(id,btn){var o=$(id).classList.toggle('on');if(btn)$(btn).classList.toggle('on',o);return o;}
+  function closeAll(){['menu','help'].forEach(function(x){$(x).classList.remove('on');});$('bmenu').classList.remove('on');}
+  // menu
+  var grid=$('mgrid');
+  slides.forEach(function(s,j){var a=document.createElement('a');
+    a.innerHTML='<div class="mn">'+(j+1)+' · '+(SECS[j]||'')+'</div><div class="mt">'+(title(s)||'—')+'</div>';
+    a.onclick=function(e){e.stopPropagation();closeAll();show(j);};grid.appendChild(a);});
+  function openMenu(){[].forEach.call(grid.children,function(a,j){a.classList.toggle('cur',j===i);});toggle('menu','bmenu');}
+  // index rows
+  [].forEach.call(document.querySelectorAll('tr[data-goto]'),function(r){
+    r.addEventListener('click',function(e){e.stopPropagation();show(parseInt(r.getAttribute('data-goto'),10)-1);});});
+  // buttons
+  $('bmenu').onclick=function(e){e.stopPropagation();openMenu();};
+  $('bnotes').onclick=function(e){e.stopPropagation();if(toggle('notes','bnotes')&&!t0)t0=Date.now();};
+  $('bfull').onclick=function(e){e.stopPropagation();fs();};
+  $('bhelp').onclick=function(e){e.stopPropagation();toggle('help');};
+  function fs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen();}else{document.exitFullscreen();}}
+  setInterval(function(){if(!t0)return;var s=Math.floor((Date.now()-t0)/1000);
+    $('ntime').textContent=Math.floor(s/60)+':'+('0'+s%60).slice(-2);},1000);
+  document.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='Escape'){closeAll();return;}
+    if($('menu').classList.contains('on')&&k!=='m'&&k!=='M'&&k!=='o'&&k!=='O')return;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+    else if(k==='Home'){show(0);} else if(k==='End'){show(n-1);}
+    else if(k==='f'||k==='F'){fs();}
+    else if(k==='m'||k==='M'||k==='o'||k==='O'){openMenu();}
+    else if(k==='n'||k==='N'){if(toggle('notes','bnotes')&&!t0)t0=Date.now();}
+    else if(k==='?'||k==='h'||k==='H'){toggle('help');}
+  });
+  document.addEventListener('click',function(e){
+    if(e.target.closest('a,button,.overlay,.notes,tr[data-goto]'))return;
+    if(e.clientX>window.innerWidth*0.5){next();}else{prev();}
+  });
+  var tx=null;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;
+    if(Math.abs(d)>50){d<0?next():prev();}tx=null;});
+  var h=parseInt((location.hash||'').replace('#',''),10);show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

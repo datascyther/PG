@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal Branding for Puneet Gupta — YouTube &amp; Instagram</title>
+<style>
+  :root{--paper:#FFFFFF;--ink:#111111;--muted:#5C5C5C;--dim:#8A8A8A;--hair:#CFCFCF;--soft:#F5F4F1}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
+  body{overflow:hidden}
+  .deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;
+    padding:7vh 8vw 10vh;opacity:0;transition:opacity .16s ease}
+  .slide.on{display:flex;opacity:1}
+  .sans{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+
+  h1{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;
+    font-size:clamp(2.6rem,5.2vw,4.8rem);line-height:1.02;letter-spacing:-.015em;margin:0 0 2.6vh}
+  h2{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;
+    font-size:clamp(1.5rem,2.7vw,2.5rem);line-height:1.08;letter-spacing:-.01em;margin:0 0 2.8vh}
+  p{margin:0 0 1.6vh;font-size:clamp(.88rem,1.1vw,1.04rem);line-height:1.6;max-width:68ch}
+  .lede{font-size:clamp(1rem,1.5vw,1.4rem);line-height:1.5;max-width:56ch}
+  .small{font-size:.76rem;color:var(--muted);line-height:1.55;max-width:80ch}
+  .note{font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.5;max-width:70ch}
+  .rule{height:1px;background:var(--hair);border:0;margin:3vh 0}
+
+  /* tag + accent block */
+  .tag{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--ink);
+    padding:.25vh .5vw;vertical-align:middle;margin-left:.6vw;font-style:normal;color:var(--ink)}
+  .accent{border-left:2px solid var(--ink);padding-left:1.1vw}
+
+  /* cover */
+  .cover-row{display:flex;align-items:center;gap:2.2vw;margin-bottom:1.6vh}
+  .disc{width:6.2vw;height:6.2vw;min-width:64px;min-height:64px;border:1px solid var(--ink);border-radius:50%;
+    background:#fff;display:grid;place-items:center;font-family:"Didot",Georgia,serif;
+    font-size:clamp(.9rem,1.7vw,1.5rem);flex:none}
+  .for{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .for b{color:var(--ink);font-weight:600}
+  .cover h1{font-size:clamp(3.2rem,7.4vw,7rem);margin:0}
+  .cover .sub{font-family:"Didot",Georgia,serif;font-style:italic;font-size:clamp(1rem,1.9vw,1.7rem);
+    color:var(--muted);margin-top:1.2vh}
+
+  .cols{display:grid;grid-template-columns:minmax(16ch,28ch) 1fr;gap:0 4.5vw;align-items:center}
+
+  /* persona axes */
+  .axes{position:relative;height:46vh}
+  .ax-line{position:absolute;background:var(--ink)}
+  .lbl{position:absolute;font-family:"Didot",Georgia,serif;font-size:1.15rem;background:#fff;padding:.4vh .7ch}
+
+  /* anti positioning tree */
+  .tree{position:relative;height:28vh;margin-top:1vh}
+  .tree .top{position:absolute;left:50%;top:0;transform:translateX(-50%);
+    font-family:"Didot",Georgia,serif;font-size:clamp(1.8rem,3vw,2.6rem);text-align:center;line-height:1.05}
+  .tree .stem{position:absolute;left:50%;top:10.5vh;height:3vh;width:1px;background:var(--ink)}
+  .tree .bar{position:absolute;top:13.5vh;height:1px;background:var(--ink);left:16%;right:16%}
+  .tree .drop{position:absolute;top:13.5vh;height:3vh;width:1px;background:var(--ink)}
+  .tree .end{position:absolute;top:17.5vh;width:26%;text-align:center;font-family:"Didot",Georgia,serif;
+    font-size:1.1rem;line-height:1.3}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;text-align:left;
+    font-weight:500;color:var(--dim);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:.9vh .9vw;border:1px solid var(--ink)}
+  td{padding:.85vh .9vw;border:1px solid var(--ink);vertical-align:middle}
+  td.n{width:5ch;color:var(--dim);font-size:.8rem}
+  td.p{font-family:"Didot",Georgia,serif;font-size:1rem}
+  td.p .sub{display:block;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-top:.35vh}
+  td.r{text-align:right;color:var(--muted);font-size:.84rem;white-space:nowrap;width:9ch}
+  tr.addrow td{background:var(--soft)}
+
+  /* domain cards */
+  .grid{display:grid;gap:1.8vh 2vw}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{border:1px solid var(--ink);padding:2vh 1.3vw;background:#fff}
+  .card.soft{border-color:var(--hair)}
+  .card .fig{font-family:"Didot",Georgia,serif;font-size:1.15rem;margin-bottom:.8vh}
+  .card p{font-size:.78rem;color:var(--muted);margin:0;max-width:none;line-height:1.5}
+  .card ul{margin:0;padding:0;list-style:none}
+  .card li{font-size:.86rem;line-height:1.75}
+
+  /* pillar slide */
+  .pill{display:grid;grid-template-columns:minmax(17ch,23ch) 1fr;gap:0 3.6vw;align-items:start}
+  .pill .idx{font-family:"Didot",Georgia,serif;font-size:2.4rem;line-height:1;color:var(--dim);margin-bottom:1.2vh}
+  .pill h1{font-size:clamp(1.8rem,3.1vw,2.9rem);margin-bottom:1.8vh}
+  .meta{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);line-height:2.1}
+  .pill h4{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.58rem;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 .7vh;font-weight:500}
+  .pill .block{margin-bottom:2.1vh}
+  .pill .block p{font-size:clamp(.84rem,1.02vw,.98rem);margin:0;line-height:1.55}
+  .eps{list-style:none;margin:.9vh 0 0;padding:0}
+  .eps li{font-style:italic;font-size:.86rem;padding-left:1.6ch;text-indent:-1.6ch;line-height:1.55}
+  .eps li:before{content:"— ";color:var(--dim);font-style:normal}
+  .refs a{color:var(--ink);font-size:.78rem;text-decoration:underline;text-underline-offset:2px;
+    text-decoration-color:var(--hair);margin-right:1.4vw;line-height:1.9;display:inline-block}
+  .refs a:hover{text-decoration-color:var(--ink)}
+
+  /* podcast theme loop */
+  .loop{display:grid;grid-template-columns:1fr 8vw 1fr;grid-template-rows:auto 7vh auto;
+    max-width:62vw;margin:2vh auto 0;align-items:center}
+  .box{border:1px solid var(--ink);padding:2vh 1.4vw;min-height:13vh}
+  .box h4{font-family:"Didot",Georgia,serif;font-weight:400;font-size:1.1rem;margin:0 0 .8vh}
+  .box p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+  .arr{font-family:-apple-system,sans-serif;color:var(--ink);text-align:center;font-size:1.1rem;letter-spacing:.2em}
+  .arr.v{grid-column:3;text-align:center}
+
+  .divider h1{font-size:clamp(3rem,6.4vw,6rem)}
+
+  /* cadence + process */
+  .bul{list-style:none;margin:0;padding:0}
+  .bul li{font-family:"Didot",Georgia,serif;font-size:1.3rem;line-height:1.9}
+  .bul li:before{content:"• ";color:var(--dim)}
+  .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stage{border:1px solid var(--ink);margin-left:-1px}
+  .stage .hd{background:var(--ink);color:#fff;font-family:"Didot",Georgia,serif;font-size:1.15rem;
+    text-align:center;padding:1.4vh 0}
+  .stage ul{list-style:none;margin:0;padding:1.6vh 1.2vw}
+  .stage li{font-size:.86rem;line-height:2}
+
+  /* furniture */
+  .mono-mini{position:absolute;left:8vw;bottom:3.6vh;width:2.5vw;height:2.5vw;min-width:26px;min-height:26px;
+    border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;
+    font-family:"Didot",Georgia,serif;font-size:.62rem}
+  .pagenum{position:absolute;right:8vw;bottom:3.8vh;font-family:-apple-system,sans-serif;font-size:.6rem;
+    letter-spacing:.14em;color:var(--dim)}
+  .wordmark{position:absolute;left:50%;bottom:3.8vh;transform:translateX(-50%);
+    font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.2em;color:var(--dim)}
+  .bar{position:absolute;left:0;bottom:0;height:1.5px;background:var(--ink);transition:width .16s ease}
+  .idxt td{padding:.6vh .9vw}
+  td.trk{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.6rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;width:20ch}
+  .mixt td{text-align:center;font-family:"Didot",Georgia,serif;font-size:1.15rem;padding:1.3vh .9vw}
+  .mixt td.p{text-align:left;font-size:1.05rem}
+  .mixt th{text-align:center}.mixt th:first-child{text-align:left}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+<!-- 1 -->
+<section class="slide">
+  <div class="cover-row">
+    <div class="disc">PG</div>
+    <div class="for">Personal <b>branding</b> for</div>
+  </div>
+  <h1>Puneet Gupta</h1>
+  <div class="sub">YouTube and Instagram content strategy</div>
+  <p class="small" style="margin-top:5vh">Five domains — defence, entrepreneurship, investing, founder life and AI — built into one YouTube and Instagram plan.</p>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <h1>Vision</h1>
+  <p class="lede" style="max-width:60ch">To position Puneet as the most nuanced voice for India's defence and AI future — and as the founder and investor who has built inside it.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="cols">
+    <h1 style="margin:0">Brand<br>Persona</h1>
+    <div class="axes">
+      <div class="ax-line" style="left:30%;right:30%;top:50%;height:1px"></div>
+      <div class="ax-line" style="top:14%;bottom:14%;left:50%;width:1px"></div>
+      <div class="disc" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)">PG</div>
+      <div class="lbl" style="left:70%;top:50%;transform:translate(0,-50%)">Credible</div>
+      <div class="lbl" style="right:70%;top:50%;transform:translate(0,-50%)">Strategic</div>
+      <div class="lbl" style="left:50%;top:4%;transform:translateX(-50%)">Veteran</div>
+      <div class="lbl" style="left:50%;bottom:4%;transform:translateX(-50%)">Approachable</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="tree">
+    <div class="top">Anti<br>Positioning</div>
+    <div class="stem"></div>
+    <div class="bar"></div>
+    <div class="drop" style="left:16%"></div>
+    <div class="drop" style="left:50%"></div>
+    <div class="drop" style="left:84%"></div>
+    <div class="end" style="left:3%">Sounding<br>Preachy</div>
+    <div class="end" style="left:37%">Pro-politics<br>Narrative</div>
+    <div class="end" style="left:71%">Typical<br>Motivator</div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <h2>Five Domains</h2>
+  <p class="small" style="margin-top:-1.4vh;margin-bottom:2.6vh">Defence gives the channels an edge no other founder has. The other four make them his, and take the audience well beyond defence.</p>
+  <div class="grid g3">
+    <div class="card"><div class="fig">Defence</div>
+      <p>His 2008–2016 chapter building defence technology · the insider edge on security and strategy</p></div>
+    <div class="card"><div class="fig">Entrepreneurship</div>
+      <p>A company built out of an IIT Delhi lab to ₹100 crore ARR · ~20 patents · National
+      Entrepreneurship Award, 2019</p></div>
+    <div class="card"><div class="fig">Investor</div>
+      <p>Raised a ₹20 crore+ Series A · on the Born Unicorn Season 1 jury: 5,000–6,000
+      applications → 30 → 6</p></div>
+    <div class="card"><div class="fig">Founder</div>
+      <p>~1,000 hires · nine roles, 2007–2026 · stepped down as CEO in 2025 after the
+      acquisition</p></div>
+    <div class="card"><div class="fig">AI</div>
+      <p>Doctorate in generative AI, in progress · building a stealth AI venture (themes only, no
+      names)</p></div>
+    <div class="card soft"><div class="fig" style="font-size:1rem">The balance</div>
+      <p>About 40% of monthly output is defence and strategy; 60% is building, capital, founder life
+      and AI.</p></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide divider" style="align-items:center;text-align:center">
+  <h1>Content Strategy</h1>
+  <div class="sans" style="letter-spacing:.3em;font-size:.7rem;color:var(--dim)">YOUTUBE</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="cols">
+    <h1 style="margin:0">Content<br>Index</h1>
+    <div>
+      <table class="idxt">
+        <tr><th>#</th><th>YouTube pillar</th><th>Track</th><th style="text-align:right">Slide</th></tr>
+        <tr><td class="n">1</td><td class="p">Podcast with Puneet<span class="sub">defence · founder · investor · AI</span></td><td class="trk">Flagship</td><td class="r">8 – 10</td></tr>
+        <tr><td class="n">2</td><td class="p">On Ground Stories<span class="sub">defence · entrepreneurship</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">11</td></tr>
+        <tr><td class="n">3</td><td class="p">War Breakdown<span class="sub">defence · founder</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">12</td></tr>
+        <tr><td class="n">4</td><td class="p">Defence Gaps<span class="sub">defence · investor</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">13</td></tr>
+        <tr><td class="n">5</td><td class="p">The Strategic Affairs<span class="sub">defence · entrepreneurship</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">14</td></tr>
+        <tr><td class="n">6</td><td class="p">Versus Series<span class="sub">defence · entrepreneurship</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">15</td></tr>
+        <tr><td class="n">7</td><td class="p">Weapon of the Week<span class="sub">defence · entrepreneurship</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">16</td></tr>
+        <tr><td class="n">8</td><td class="p">Vision 2035<span class="sub">AI · defence</span></td><td class="trk">Future &amp; AI</td><td class="r">17</td></tr>
+        <tr><td class="n">9</td><td class="p">AI Decoded<span class="sub">AI</span></td><td class="trk">Future &amp; AI</td><td class="r">18</td></tr>
+        <tr><td class="n">10</td><td class="p">Defence Startup Decoded<span class="sub">entrepreneurship · defence</span></td><td class="trk">Building &amp; Capital</td><td class="r">19</td></tr>
+        <tr><td class="n">11</td><td class="p">The Investor's Table<span class="sub">investor</span></td><td class="trk">Building &amp; Capital</td><td class="r">20</td></tr>
+        <tr><td class="n">12</td><td class="p">Founder's Playbook<span class="sub">founder</span></td><td class="trk">Building &amp; Capital</td><td class="r">21</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">01</div>
+      <h1>Podcast<br>with Puneet</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Flagship</b><br>Long form · 60–75 min<br>Defence · founder<br>Investor · AI</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Long-form conversations (60-75 mins) with soldiers, intelligence professionals, military
+        leaders, veterans, defence innovators, diplomats, and strategic thinkers to understand the
+        human stories, decisions, sacrifices, and lessons behind India's national security
+        ecosystem.</p></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>There's no dedicated podcast channel around this niche in India apart from Monk and
+        Warriors. Likes of IRS Ravi Kapoor, Raj Shamani, Prakhar Gupta, Ranveer Allahabadia are doing
+        in bits and pieces. Also they don't have that credibility of association with defence sector.
+        Hence, Puneet has that USP of bringing out the best insights from the guests.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4>
+        <p>The same chair also hosts founders, investors and AI builders who work on India's security
+        and technology. No Indian show combines a defence insider with an operator who has built,
+        raised and exited.</p></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://youtu.be/5CU8rT6O9qI" target="_blank">Untold Combat Stories ft. Col. Hemonto Panging</a>
+        <a href="https://youtu.be/hwTK3IWxcyY" target="_blank">Hav Liyakat Ali, SM — Monks &amp; Warriors</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <h2 style="text-align:center">Probable Guests</h2>
+  <div class="grid g3">
+    <div class="card soft"><div class="fig">Military Leaders</div><ul>
+      <li>Lt Gen K.J.S. Dhillon</li><li>Lt Gen Syed Ata Hasnain</li><li>Air Marshal Anil Chopra</li><li>Vice Admiral Shekhar Sinha</li></ul></div>
+    <div class="card soft"><div class="fig">Defence Analysts</div><ul>
+      <li>Arun Prakash</li><li>Bharat Karnad</li><li>Pravin Sawhney</li><li>Brahma Chellaney</li></ul></div>
+    <div class="card"><div class="fig">Founders &amp; Investors</div><ul>
+      <li>Rahul Agarwal — RASA Group</li><li>Radhika Gupta</li><li>Anuj Khandelwal</li><li>Alok Pandey — AIC IIT Delhi</li></ul></div>
+    <div class="card soft"><div class="fig">Special Forces &amp; Veterans</div><ul>
+      <li>Major Deepika Rathore</li><li>Major Gaurav Arya</li><li>Major Gen G.D. Bakshi</li></ul></div>
+    <div class="card soft"><div class="fig">Intelligence Specialist</div><ul>
+      <li>Vikram Sood</li><li>Amarjit Singh Dulat</li><li>Pankaj Saran</li></ul></div>
+    <div class="card"><div class="fig">AI &amp; Tech Builders</div><ul>
+      <li>Dr Ajay Kumar — author, <i>AI Nation</i></li><li>Prof. V. Ramgopal Rao</li><li>Dr Nikhil Agarwal — FITT, IIT Delhi</li></ul></div>
+  </div>
+  <p class="note" style="margin-top:2vh">The founder, investor and AI names come from his own network. Every guest still needs to be invited and confirmed.</p>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <h2 style="text-align:center">Podcast Theme</h2>
+  <div class="loop">
+    <div class="box"><h4>About the Person</h4><p>Emotional connection</p></div>
+    <div class="arr">→</div>
+    <div class="box"><h4>Professional Life</h4><p>Storytelling and suspense</p></div>
+    <div></div><div></div><div class="arr v">↓</div>
+    <div class="box"><h4>Future</h4><p>Tech, AI, hope and vision</p></div>
+    <div class="arr">←</div>
+    <div class="box"><h4>Insights</h4><p>National security</p>
+      <p class="accent" style="margin-top:.8vh;color:var(--ink)">+ building, capital and AI</p></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">02</div>
+      <h1>On Ground<br>Stories</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Long form<br>Defence · entrepreneurship</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>An on-ground series where the host visits naval bases, air force stations, army units,
+        training academies, border regions, defence labs, shipyards, and operational commands to
+        understand how India's national security ecosystem functions from the inside.</p></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Very few get audiences access to the people, systems, training, and technologies that
+        protect the country daily. This creates credibility, exclusivity, and curiosity while
+        showcasing the human stories behind defence institutions.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>Inside the incubators and labs where India's defence-tech startups begin</li>
+        <li>A day with a founder whose product is in field trials</li></ul></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://youtu.be/iU5fV2PzzWM" target="_blank">Walking Through the Real Kargil Battlefield</a>
+        <a href="https://www.youtube.com/watch?v=FC3exMs5BmU" target="_blank">I spent Diwali with Indian Army at LoC Kashmir</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">03</div>
+      <h1>War<br>Breakdown</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Long form<br>Defence · founder</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Breaking down historic military operations, wars, and intelligence strategies to understand
+        what happened, why it mattered, and what we can learn from them.</p>
+        <ul class="eps"><li>Kargil: The 3 decisions that changed the outcome of the War</li>
+        <li>How intelligence helped India prepare for the 1971 War</li>
+        <li>The Uri Surgical Strike Explained</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>People are naturally drawn to stories of conflict, strategy, and turning points in history.
+        When he breaks down Kargil, he's not just narrating; he's narrating "what decision
+        infrastructure failed here, and how would we solve it today?" That's a POV no history channel
+        can make.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>What a founder can learn from the decisions behind 1971</li></ul></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://youtu.be/QjfziCCxvP4" target="_blank">What REALLY Happened in Kargil War 1999</a>
+        <a href="https://youtu.be/XUhsO6Pbauw" target="_blank">How Bin Laden Planned 9/11</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">04</div>
+      <h1>Defence<br>Gaps</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Long form<br>Defence · investor</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Each content piece explores vulnerabilities, capability shortfalls, and the reforms needed to
+        build a more resilient defence ecosystem.</p>
+        <ul class="eps"><li>Why India's defence budget is 1/10th of USA</li>
+        <li>Why India still buys 60% of its weapons from Russia and France</li>
+        <li>The defence manufacturing challenge India must solve</li>
+        <li>The DRDO problem: 50 years, thousands of crores, still no world-class fighter jet</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Most defence content celebrates achievements. Very few people discuss weaknesses, capability
+        gaps, and areas where India needs improvement. Being associated with this sector, these
+        insights would enhance his thought leadership and position him as a strategic critic.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>Why private capital still avoids Indian defence-tech</li></ul></div>
+      <div class="refs"><h4>Reference</h4>
+        <a href="https://youtu.be/48k7IIGpu0w" target="_blank">India's struggles spending its meagre defence budgets: hard truths with data</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">05</div>
+      <h1>The Strategic<br>Affairs</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Long form · topical<br>Defence · entrepreneurship</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Explaining how government policies, international relations, and geopolitical developments
+        influence India's security and global standing. Also covering topical content here.</p>
+        <ul class="eps"><li>How India went from being the world's biggest weapons buyer to selling
+        indigenous military tech to over 80 countries</li>
+        <li>Inside India's 10-year deal to run Iran's Chabahar port to completely bypass Pakistan</li>
+        <li>Why the government is deploying elite CoBRA commandos to the region and how border ethnic
+        friction threatens national stability</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Geopolitical events are increasingly affecting economies, trade, technology, and security. As
+        he's an insider and builder in this space, this helps him to build authority. Audiences connect
+        global developments with India's national security.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>What a new defence export rule means for an Indian startup</li></ul></div>
+      <div class="refs"><h4>Reference</h4>
+        <a href="https://youtu.be/DKFZT4mDQgU" target="_blank">India's Rail Strategy: Securing Borders &amp; Chicken Neck</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">06</div>
+      <h1>Versus<br>Series</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Long form<br>Defence · entrepreneurship</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Comparing India's defence, technology, governance, economic, and innovation capabilities
+        against leading nations to understand where the country stands today.</p>
+        <ul class="eps"><li>India Vs Singapore: Why governance matters more than size</li>
+        <li>India Vs China: Who is winning the drone race</li>
+        <li>India Vs Israel: What can we learn about National Security</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Versus series is one of the most watchable format on YT. Instead of nationalistic
+        chest-thumping, this theme helps audiences understand where India genuinely leads, where it
+        lags, and what lessons can be learned.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>India Vs Israel: how defence research turns into startups</li></ul></div>
+      <div class="refs"><h4>Reference</h4>
+        <a href="https://youtu.be/0uUnG7zavxo" target="_blank">India Vs China Military Power 2025</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">07</div>
+      <h1>Weapon of<br>the Week</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>8–10 min · weekly<br>Defence · entrepreneurship</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Every week, Puneet breaks down one weapon system, defence technology, or military platform in
+        8 to 10 minutes. How it works. What makes it effective? Where India has it or doesn't. How's it
+        compared to equivalents globally.</p>
+        <ul class="eps"><li>How do AI-driven thermal imaging systems spot an intruder moving through
+        thick Himalayan fog</li><li>Utility of Brahmos Missile</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Technology is often discussed in technical language that feels inaccessible. Simplifying how
+        intelligence agencies, armed forces, and defence companies operate builds curiosity.
+        Establishes him as a bridge between complex systems and public understanding.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>The startup behind the system: who builds it in India</li></ul></div>
+      <div class="refs"><h4>Reference</h4>
+        <a href="https://youtu.be/1H_9pCPVoBY" target="_blank">What Is SAKSHAM System? India's New Counter-Drone Grid Explained</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">08</div>
+      <h1>Vision<br>2035</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Future &amp; AI</b><br>Long form<br>Defence · AI</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Forward-looking content about what India needs to build over the next decade to achieve
+        genuine technological sovereignty and strategic advantage.</p>
+        <ul class="eps"><li>The skills every Indian student should learn in this decade</li>
+        <li>The Five Technologies that will decide India's future</li>
+        <li>India's Biggest challenge Is not population but productivity</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>As India is one of the fastest growing economy this bucket will help the audience understand
+        how we can make India's future better and prosperous. Establishes Puneet as a visionary
+        leader.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>The AI stack India must own by 2035</li></ul></div>
+      <div class="refs"><h4>Reference</h4>
+        <a href="https://youtu.be/hjVama9Id8M" target="_blank">Can India hit the 10 trillion dollar GDP dream? — economic case study</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">09</div>
+      <h1>AI<br>Decoded</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Future &amp; AI</b><br>Long form<br>AI</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>AI explained for decision-makers — what it means for national security, for business, and
+        for India's ability to own its own technology. Themes only: no products, no partners.</p>
+        <ul class="eps"><li>Who owns India's compute?</li>
+        <li>What generative AI actually changes for a company of 500 people</li>
+        <li>Sovereign AI: why it matters beyond technology</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>The vision already names AI as half of India's future; this pillar gives it a home on
+        YouTube. He studies it formally and builds in it, which makes him a practitioner, not a
+        commentator.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">Doctorate in generative AI, Golden Gate University (96% in the GenAI module) · building a stealth AI venture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">10</div>
+      <h1>Defence Startup<br>Decoded</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Building &amp; Capital</b><br>Long form<br>Entrepreneurship × defence</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>How Indian founders build companies that sell to the armed forces — the trials, the
+        procurement process, the first order and the wait for the second — told by someone who built
+        defence technology from 2008 to 2016.</p>
+        <ul class="eps"><li>How does a startup win its first defence contract?</li>
+        <li>iDEX explained: what it changed for Indian defence startups</li>
+        <li>Why most defence-tech startups stall between trial and order</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Defence is opening up to private builders, and founders want the playbook. Very few people
+        have built in this sector and can also explain it. This pillar turns the defence channel into a
+        business channel as well.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">Defence-technology venture, 2008–2016 · National Entrepreneurship Award, Govt of India, 2019</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">11</div>
+      <h1>The Investor's<br>Table</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Building &amp; Capital</b><br>Long form<br>Investor</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>What happens on the other side of the pitch: how investors and juries actually decide — what
+        they look for in the first five minutes, the red flags, and why good companies still get a
+        no.</p>
+        <ul class="eps"><li>5,000 applications to 6: how a jury really chooses</li>
+        <li>What investors look for in a defence-tech or AI startup</li>
+        <li>Why do good companies still get a no?</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Pitch content is among the most watched startup content in India, but almost all of it is
+        shot from the founder's chair. He has sat in both — he raised capital, and he sat on a jury
+        — so he can explain the decision, not just the pitch.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">Born Unicorn Season 1 jury, Sep–Oct 2026: 5,000–6,000 applications → 30 → 6 · ₹20 crore+ Series A raised</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">12</div>
+      <h1>Founder's<br>Playbook</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Building &amp; Capital</b><br>Long form<br>Founder</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>The operating decisions behind taking a company from an IIT Delhi lab to ₹100 crore ARR and an
+        acquisition — hiring, scaling the team, the board, stepping down. One decision per episode.</p>
+        <ul class="eps"><li>What 1,000 hires taught me about the first ten</li>
+        <li>Why I stepped down as CEO while the company was still growing</li>
+        <li>The advice from a board member I still carry</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Founder content mostly shares wins. Very few founders who have been through an acquisition
+        walk through the decisions with the numbers attached. He has done the full cycle — start,
+        scale, exit — which gives every episode credibility.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">~1,000 hires · ₹100 crore ARR · acquired and stepped down as CEO, July 2025 · company built on IIT Delhi technology</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 -->
+<section class="slide divider" style="align-items:center;text-align:center">
+  <h1>Content Strategy</h1>
+  <div class="sans" style="letter-spacing:.3em;font-size:.7rem;color:var(--dim)">INSTAGRAM</div>
+</section>
+
+<!-- 23 -->
+<section class="slide">
+  <h1>Vision</h1>
+  <p class="lede" style="max-width:60ch">To position Puneet as an insider voice on geopolitics, defence and AI — and on how India's founders and investors build that future — and make India's strategic future feel personal.</p>
+</section>
+
+<!-- 24 -->
+<section class="slide">
+  <div class="cols">
+    <h1 style="margin:0">Content<br>Index</h1>
+    <div>
+      <table class="idxt">
+        <tr><th>#</th><th>Instagram pillar</th><th>Track</th><th style="text-align:right">Slide</th></tr>
+        <tr><td class="n">1</td><td class="p">Journey Decoded<span class="sub">founder · defence</span></td><td class="trk">Founder's Journey</td><td class="r">25</td></tr>
+        <tr><td class="n">2</td><td class="p">Strategic Frameworks<span class="sub">founder · defence</span></td><td class="trk">Founder's Journey</td><td class="r">26</td></tr>
+        <tr><td class="n">3</td><td class="p">First-principles Geopolitics<span class="sub">defence · entrepreneurship</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">27</td></tr>
+        <tr><td class="n">4</td><td class="p">Tech &amp; Defence<span class="sub">defence · AI</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">28</td></tr>
+        <tr><td class="n">5</td><td class="p">Heroes' Journey<span class="sub">defence</span></td><td class="trk">Defence &amp; Strategy</td><td class="r">29</td></tr>
+        <tr><td class="n">6</td><td class="p">Startup Breakdown<span class="sub">entrepreneurship</span></td><td class="trk">Building &amp; Capital</td><td class="r">30</td></tr>
+        <tr><td class="n">7</td><td class="p">The Investor Lens<span class="sub">investor</span></td><td class="trk">Building &amp; Capital</td><td class="r">31</td></tr>
+        <tr><td class="n">8</td><td class="p">AI in 60 Seconds<span class="sub">AI</span></td><td class="trk">Future &amp; AI</td><td class="r">32</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 25 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">01</div>
+      <h1>Journey<br>Decoded</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Founder's Journey</b><br>Instagram<br>Founder · defence</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>A candid series documenting life lessons and stories around personal and professional
+        life.</p>
+        <ul class="eps"><li>How army personnel inspired me in life?</li>
+        <li>Why I stepped down from Clensta?</li>
+        <li>The vision behind starting my stealth AI venture</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Personal journey, insights and nuances from life and operating different businesses makes
+        the content feel humanly and relatable.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>The day I sat on the other side of the pitch table</li></ul></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://www.instagram.com/reel/C0WYxizSjb1/" target="_blank">Manish Chowdhary</a>
+        <a href="https://www.instagram.com/p/DXZOIDLiHFa/" target="_blank">Rizwan Sajan</a>
+        <a href="https://www.instagram.com/reel/C6y7bj8vRPL/" target="_blank">Reel</a>
+        <a href="https://www.instagram.com/reel/DYPOS2svH3n/" target="_blank">Jesus Lall</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 26 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">02</div>
+      <h1>Strategic<br>Frameworks</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Founder's Journey</b><br>Instagram<br>Defence · founder</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Decoding the mental models, decision frameworks, strategic thinking, and behavioral patterns
+        used by soldiers, military commanders, intelligence officers, and national security leaders —
+        applying them to business, leadership, careers, and everyday life.</p>
+        <ul class="eps"><li>How military commanders think three moves ahead?</li>
+        <li>Mental toughness lessons from military selection programs!</li>
+        <li>Why military units outperform groups of talented individuals?</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>It elevates the content from defence stories to human performance and strategic thinking,
+        making it relevant to anyone ambitious enough to improve how they think and operate.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>The decision framework I used to step down as CEO</li></ul></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://www.instagram.com/reel/DPgYU2yjP1z/" target="_blank">Grow As Entrepreneurs</a>
+        <a href="https://www.instagram.com/reel/DYrlaZaN8r4/" target="_blank">Ishaan Mudgal</a>
+        <a href="https://www.instagram.com/p/DRNAwFgkzwR/" target="_blank">Narendra Singh Thakur</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 27 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">03</div>
+      <h1>First-principles<br>Geopolitics</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Instagram · topical<br>Defence · entrepreneurship</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Instead of just reporting on world events, Puneet maps global conflicts from absolute first
+        principles — focusing heavily on India's geography, supply chains, and historical patterns.</p>
+        <ul class="eps"><li>How a single chokepoint in the Red Sea controls the price of your next smartphone?</li>
+        <li>Why 80% of China's energy flows through a narrow Indian Ocean straw?</li>
+        <li>Deconstructing the Taiwan Strait not as a political ideological battle, but as global technological leverage!</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Explaining exactly why a border skirmish or a maritime blockade matters to the common man's
+        wallet, shifting the narrative from basic news reporting to systemic impact. It's going to be
+        topical &amp; AI-led mostly.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>What a shipping blockade does to an Indian startup's costs</li></ul></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://www.instagram.com/reel/DXtAodXDm5k/" target="_blank">amit kumar kilhor</a>
+        <a href="https://www.instagram.com/reel/DWoi8qwyPPl/" target="_blank">Global energy war reel</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 28 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">04</div>
+      <h1>Tech &amp;<br>Defence</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Instagram<br>Defence · AI</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Decoding how independent technology, data ownership, and raw computing power are impacting
+        national security besides traditional physical borders.</p>
+        <ul class="eps"><li>Why is running national defense systems on foreign AI models considered an immediate sovereign threat?</li>
+        <li>How does a single semiconductor hardware monopoly secretly dictate global missile defence timelines?</li>
+        <li>Why does mapping the dark ocean floor control the internet cables running the modern world?</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>By analyzing tech and also industry opportunities from an insider perspective, it explains the
+        defence sector from core. Having first-hand experience and association, this bucket will help
+        him to differentiate with generic insight.</p></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://www.instagram.com/reel/DZQWG69kT1i/" target="_blank">Fortune — executive security</a>
+        <a href="https://www.instagram.com/reel/DXHW5h6gR7G/" target="_blank">Aanya Mehta — India's quantum network</a>
+        <a href="https://www.instagram.com/reel/DVqNNlJjaAQ/" target="_blank">AI &amp; SaaS Future</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 29 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">05</div>
+      <h1>Heroes'<br>Journey</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence &amp; Strategy</b><br>Instagram<br>Defence</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Exploring the lives, missions, decisions, sacrifices, and leadership of soldiers, intelligence
+        officers, military commanders, covert operatives, and defence innovators who shaped national
+        security.</p></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Audiences on IG connect more deeply with stories of individuals than with discussions about
+        tanks, missiles, or policy.</p></div>
+      <div class="block accent"><h4>Beyond defence</h4><ul class="eps" style="margin-top:0">
+        <li>Defence innovators who became founders</li></ul></div>
+      <div class="refs"><h4>References</h4>
+        <a href="https://www.instagram.com/p/DZc80HQE_i2/" target="_blank">Ground Zero — first woman Subedar</a>
+        <a href="https://www.instagram.com/p/DXZiFvmCr1E/" target="_blank">The story of Lt. Gen. SK Sinha</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 30 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">06</div>
+      <h1>Startup<br>Breakdown</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Building &amp; Capital</b><br>Instagram<br>Entrepreneurship</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Short breakdowns of how Indian startups win or lose — one decision and one number per post.</p>
+        <ul class="eps"><li>How a company from an IIT lab reached ₹100 crore ARR</li>
+        <li>Why defence-tech startups wait years for their first order</li>
+        <li>The one metric investors ask about first</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Business breakdowns are among the most saved formats on Instagram. Coming from someone who
+        has built, raised and exited, every breakdown carries an insider's view instead of a
+        commentator's.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">₹100 crore ARR · ~20 patents · acquired 2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 31 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">07</div>
+      <h1>The Investor<br>Lens</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Building &amp; Capital</b><br>Instagram<br>Investor</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>Reels from the jury's side of the table: the red flags, the good signs, and the question that
+        decides.</p>
+        <ul class="eps"><li>The first question I ask every founder</li>
+        <li>5,000 applied, 6 were picked: what separated them</li>
+        <li>A red flag I see in most pitch decks</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Pitch content is the most watched startup content in India; the investor's side of it is
+        rarer and more useful to founders.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">Born Unicorn Season 1 jury, 2026 · 5,000–6,000 applications → 30 → 6</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 32 -->
+<section class="slide">
+  <div class="pill">
+    <div>
+      <div class="idx">08</div>
+      <h1>AI in<br>60 Seconds</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Future &amp; AI</b><br>Instagram<br>AI</div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4>
+        <p>One AI idea a week, explained in plain language for founders and business leaders.</p>
+        <ul class="eps"><li>What an AI model actually costs to run</li>
+        <li>Why data ownership is the new border</li>
+        <li>AI agents, explained in 60 seconds</li></ul></div>
+      <div class="block"><h4>Why this idea?</h4>
+        <p>Instagram is going to be topical and AI-led. Giving AI its own pillar for a business audience, separate from Tech &amp; Defence, reaches founders and leaders who would never follow a defence page.</p></div>
+      <div class="refs"><h4>Proof</h4>
+        <span class="small">Doctorate in generative AI, in progress · building a stealth AI venture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 33 -->
+<section class="slide">
+  <h2>Monthly Cadence &amp; Mix</h2>
+  <table class="mixt">
+    <tr><th>Track</th><th>YouTube long form · 6</th><th>Podcasts · 2</th><th>Instagram reels · 16</th><th>Carousels · 4</th></tr>
+    <tr><td class="p">Defence &amp; Strategy</td><td>3</td><td>1</td><td>6</td><td>1</td></tr>
+    <tr><td class="p">Building &amp; Capital</td><td>2</td><td>1</td><td>3</td><td>2</td></tr>
+    <tr><td class="p">Founder's Journey</td><td>—</td><td>—</td><td>4</td><td>—</td></tr>
+    <tr><td class="p">Future &amp; AI</td><td>1</td><td>—</td><td>3</td><td>1</td></tr>
+  </table>
+  <div class="grid g3" style="margin-top:3vh">
+    <div><div class="meta">Plus, every month</div><p style="margin:.6vh 0 0">10–12 YouTube Shorts &amp; clips, cut from the long form</p></div>
+    <div><div class="meta">Podcast clips</div><p style="margin:.6vh 0 0">10–12 clips on a dedicated Instagram handle</p></div>
+    <div><div class="meta">The balance</div><p style="margin:.6vh 0 0">11 of 28 core pieces (about 40%) are defence; the rest build the founder, investor and AI voice</p></div>
+  </div>
+</section>
+
+<!-- 34 -->
+<section class="slide">
+  <h2>Process</h2>
+  <div class="proc">
+    <div class="stage"><div class="hd">Pre Prod</div><ul><li>Strategy</li><li>Ideation</li><li>Keyword Research</li><li>Content Research</li><li>Scripting</li></ul></div>
+    <div class="stage"><div class="hd">Prod</div><ul><li>Locations</li><li>Setup</li><li>Equipment</li><li>Shooting</li><li>Content Direction</li></ul></div>
+    <div class="stage"><div class="hd">Post Prod</div><ul><li>Editing</li><li>Covers/Thumbnails</li><li>Titles</li><li>Repurposing</li><li>Captions/Descriptions</li></ul></div>
+    <div class="stage"><div class="hd">Post Publish</div><ul><li>Tracking of Key Metrics</li><li>Monthly Actionable Reports</li></ul></div>
+  </div>
+  <p class="note accent" style="margin-top:3vh;font-style:normal;color:var(--ink)">Two checks before
+  anything publishes: every fact traced to his public record, and Puneet's explicit yes.</p>
+</section>
+
+<!-- 35 -->
+<section class="slide divider">
+  <h1>Let's build it<br>together.</h1>
+</section>
+
+<div class="mono-mini">PG</div>
+<div class="wordmark">puneet gupta · content strategy</div>
+<div class="pagenum" id="pg">1 / 35</div>
+<div class="bar" id="bar"></div>
+</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var i=0,n=slides.length;
+  function show(k){
+    i=Math.max(0,Math.min(n-1,k));
+    slides.forEach(function(s,j){s.classList.toggle('on',j===i);});
+    document.getElementById('pg').textContent=(i+1)+' / '+n;
+    document.getElementById('bar').style.width=((i+1)/n*100)+'%';
+    if(history.replaceState){history.replaceState(null,'','#'+(i+1));}
+  }
+  function fromHash(){var h=parseInt((location.hash||'').replace('#',''),10);return isNaN(h)?0:h-1;}
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1);}
+    else if(e.key==='Home'){show(0);}
+    else if(e.key==='End'){show(n-1);}
+    else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement){document.documentElement.requestFullscreen();}else{document.exitFullscreen();}}
+  });
+  document.addEventListener('click',function(e){
+    if(e.target.closest('a'))return;
+    if(e.clientX>window.innerWidth*0.55){show(i+1);}else{show(i-1);}
+  });
+  show(fromHash());
+})();
+</script>
+</body>
+</html>

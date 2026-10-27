@@ -1,0 +1,30 @@
+{
+ "P": {
+  "min_words": 120,
+  "max_words": 320,
+  "min_paras": 3,
+  "max_paras": 8,
+  "max_sentence_words": 25,
+  "hard_sentence_words": 32,
+  "max_paras_per_para": 4,
+  "first_person": false,
+  "allow_questions": false,
+  "min_tags": 3,
+  "max_tags": 5,
+  "ngram_overlap": 5
+ },
+ "N": {
+  "min_words": 60,
+  "max_words": 150,
+  "min_paras": 3,
+  "max_paras": 7,
+  "max_sentence_words": 22,
+  "hard_sentence_words": 28,
+  "max_paras_per_para": 4,
+  "first_person": true,
+  "allow_questions": true,
+  "min_tags": 0,
+  "max_tags": 0,
+  "ngram_overlap": 5
+ }
+}

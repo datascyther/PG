@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>puneetgbuilds — YouTube, Instagram &amp; Facebook strategy</title>
+<style>
+  :root{--paper:#FFFFFF;--ink:#111111;--muted:#5C5C5C;--dim:#8A8A8A;--hair:#CFCFCF;--soft:#F5F4F1}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
+  body{overflow:hidden}
+  .deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;
+    padding:7vh 8vw 10vh;opacity:0;transition:opacity .16s ease}
+  .slide.on{display:flex;opacity:1}
+  .sans{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+
+  h1{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;
+    font-size:clamp(2.6rem,5.2vw,4.8rem);line-height:1.02;letter-spacing:-.015em;margin:0 0 2.6vh}
+  h2{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;
+    font-size:clamp(1.5rem,2.7vw,2.5rem);line-height:1.08;letter-spacing:-.01em;margin:0 0 2.8vh}
+  p{margin:0 0 1.6vh;font-size:clamp(.88rem,1.1vw,1.04rem);line-height:1.6;max-width:68ch}
+  .lede{font-size:clamp(1rem,1.5vw,1.4rem);line-height:1.5;max-width:56ch}
+  .small{font-size:.76rem;color:var(--muted);line-height:1.55;max-width:80ch}
+  .note{font-size:.78rem;color:var(--muted);font-style:italic;line-height:1.5;max-width:70ch}
+  .rule{height:1px;background:var(--hair);border:0;margin:3vh 0}
+
+  /* tag + accent block */
+  .tag{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--ink);
+    padding:.25vh .5vw;vertical-align:middle;margin-left:.6vw;font-style:normal;color:var(--ink)}
+  .accent{border-left:2px solid var(--ink);padding-left:1.1vw}
+
+  /* cover */
+  .cover-row{display:flex;align-items:center;gap:2.2vw;margin-bottom:1.6vh}
+  .disc{width:6.2vw;height:6.2vw;min-width:64px;min-height:64px;border:1px solid var(--ink);border-radius:50%;
+    background:#fff;display:grid;place-items:center;font-family:"Didot",Georgia,serif;
+    font-size:clamp(.9rem,1.7vw,1.5rem);flex:none}
+  .for{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .for b{color:var(--ink);font-weight:600}
+  .cover h1{font-size:clamp(3.2rem,7.4vw,7rem);margin:0}
+  .cover .sub{font-family:"Didot",Georgia,serif;font-style:italic;font-size:clamp(1rem,1.9vw,1.7rem);
+    color:var(--muted);margin-top:1.2vh}
+
+  .cols{display:grid;grid-template-columns:minmax(16ch,28ch) 1fr;gap:0 4.5vw;align-items:center}
+
+  /* persona axes */
+  .axes{position:relative;height:46vh}
+  .ax-line{position:absolute;background:var(--ink)}
+  .lbl{position:absolute;font-family:"Didot",Georgia,serif;font-size:1.15rem;background:#fff;padding:.4vh .7ch}
+
+  /* anti positioning tree */
+  .tree{position:relative;height:28vh;margin-top:1vh}
+  .tree .top{position:absolute;left:50%;top:0;transform:translateX(-50%);
+    font-family:"Didot",Georgia,serif;font-size:clamp(1.8rem,3vw,2.6rem);text-align:center;line-height:1.05}
+  .tree .stem{position:absolute;left:50%;top:10.5vh;height:3vh;width:1px;background:var(--ink)}
+  .tree .bar{position:absolute;top:13.5vh;height:1px;background:var(--ink);left:16%;right:16%}
+  .tree .drop{position:absolute;top:13.5vh;height:3vh;width:1px;background:var(--ink)}
+  .tree .end{position:absolute;top:17.5vh;width:26%;text-align:center;font-family:"Didot",Georgia,serif;
+    font-size:1.1rem;line-height:1.3}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;text-align:left;
+    font-weight:500;color:var(--dim);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:.9vh .9vw;border:1px solid var(--ink)}
+  td{padding:.85vh .9vw;border:1px solid var(--ink);vertical-align:middle}
+  td.n{width:5ch;color:var(--dim);font-size:.8rem}
+  td.p{font-family:"Didot",Georgia,serif;font-size:1rem}
+  td.p .sub{display:block;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-top:.35vh}
+  td.r{text-align:right;color:var(--muted);font-size:.84rem;white-space:nowrap;width:9ch}
+  tr.addrow td{background:var(--soft)}
+
+  /* domain cards */
+  .grid{display:grid;gap:1.8vh 2vw}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{border:1px solid var(--ink);padding:2vh 1.3vw;background:#fff}
+  .card.soft{border-color:var(--hair)}
+  .card .fig{font-family:"Didot",Georgia,serif;font-size:1.15rem;margin-bottom:.8vh}
+  .card p{font-size:.78rem;color:var(--muted);margin:0;max-width:none;line-height:1.5}
+  .card ul{margin:0;padding:0;list-style:none}
+  .card li{font-size:.86rem;line-height:1.75}
+
+  /* pillar slide */
+  .pill{display:grid;grid-template-columns:minmax(17ch,23ch) 1fr;gap:0 3.6vw;align-items:start}
+  .pill .idx{font-family:"Didot",Georgia,serif;font-size:2.4rem;line-height:1;color:var(--dim);margin-bottom:1.2vh}
+  .pill h1{font-size:clamp(1.8rem,3.1vw,2.9rem);margin-bottom:1.8vh}
+  .meta{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);line-height:2.1}
+  .pill h4{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.58rem;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 .7vh;font-weight:500}
+  .pill .block{margin-bottom:2.1vh}
+  .pill .block p{font-size:clamp(.84rem,1.02vw,.98rem);margin:0;line-height:1.55}
+  .eps{list-style:none;margin:.9vh 0 0;padding:0}
+  .eps li{font-style:italic;font-size:.86rem;padding-left:1.6ch;text-indent:-1.6ch;line-height:1.55}
+  .eps li:before{content:"— ";color:var(--dim);font-style:normal}
+  .refs a{color:var(--ink);font-size:.78rem;text-decoration:underline;text-underline-offset:2px;
+    text-decoration-color:var(--hair);margin-right:1.4vw;line-height:1.9;display:inline-block}
+  .refs a:hover{text-decoration-color:var(--ink)}
+
+  /* podcast theme loop */
+  .loop{display:grid;grid-template-columns:1fr 8vw 1fr;grid-template-rows:auto 7vh auto;
+    max-width:62vw;margin:2vh auto 0;align-items:center}
+  .box{border:1px solid var(--ink);padding:2vh 1.4vw;min-height:13vh}
+  .box h4{font-family:"Didot",Georgia,serif;font-weight:400;font-size:1.1rem;margin:0 0 .8vh}
+  .box p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+  .arr{font-family:-apple-system,sans-serif;color:var(--ink);text-align:center;font-size:1.1rem;letter-spacing:.2em}
+  .arr.v{grid-column:3;text-align:center}
+
+  .divider h1{font-size:clamp(3rem,6.4vw,6rem)}
+
+  /* cadence + process */
+  .bul{list-style:none;margin:0;padding:0}
+  .bul li{font-family:"Didot",Georgia,serif;font-size:1.3rem;line-height:1.9}
+  .bul li:before{content:"• ";color:var(--dim)}
+  .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stage{border:1px solid var(--ink);margin-left:-1px}
+  .stage .hd{background:var(--ink);color:#fff;font-family:"Didot",Georgia,serif;font-size:1.15rem;
+    text-align:center;padding:1.4vh 0}
+  .stage ul{list-style:none;margin:0;padding:1.6vh 1.2vw}
+  .stage li{font-size:.86rem;line-height:2}
+
+  /* furniture */
+  .mono-mini{position:absolute;left:8vw;bottom:3.6vh;width:2.5vw;height:2.5vw;min-width:26px;min-height:26px;
+    border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;
+    font-family:"Didot",Georgia,serif;font-size:.62rem}
+  .pagenum{position:absolute;right:8vw;bottom:3.8vh;font-family:-apple-system,sans-serif;font-size:.6rem;
+    letter-spacing:.14em;color:var(--dim)}
+  .wordmark{position:absolute;left:50%;bottom:3.8vh;transform:translateX(-50%);
+    font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.2em;color:var(--dim)}
+  .bar{position:absolute;left:0;bottom:0;height:1.5px;background:var(--ink);transition:width .16s ease}
+  .idxt td{padding:.6vh .9vw}
+  td.trk{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.6rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;width:20ch}
+  .mixt td{text-align:center;font-family:"Didot",Georgia,serif;font-size:1.15rem;padding:1.3vh .9vw}
+  .mixt td.p{text-align:left;font-size:1.05rem}
+  .mixt th{text-align:center}.mixt th:first-child{text-align:left}
+
+  .ptab td{vertical-align:top;padding:1.1vh .9vw}
+  .ptab td.p{font-size:1.08rem;width:19ch}
+  .ptab td.i{font-size:.82rem;color:var(--ink);line-height:1.5}
+  .ptab td.e{font-size:.8rem;font-style:italic;line-height:1.55}
+  .ptab td.e div{padding-left:1.4ch;text-indent:-1.4ch}
+  .ptab td.e div:before{content:"\2014  ";font-style:normal;color:var(--dim)}
+  .ptab td.f{font-size:.74rem;color:var(--muted);line-height:1.5;width:22ch}
+  .ptab th.w{width:19ch}
+  .trk-h{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.6rem;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 1vh}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:0 2vw}
+  .two .card p{font-size:.84rem}
+  .two .card li{font-size:.84rem;line-height:1.7}
+  .slide.pillslide{justify-content:flex-start;padding-top:19vh}
+  .pill .block p{max-width:84ch}
+  .pill .side{margin-top:3vh}
+  .pill .side h4{margin-top:1.6vh}
+  .pill .side p{font-size:.72rem;color:var(--muted);line-height:1.5;margin:0;max-width:24ch}
+  .why .stage li{line-height:1.55;padding:.4vh 0}
+  .plbl{position:absolute;background:#fff;padding:.4vh .6ch}
+  .plbl .pw{font-family:"Didot","Bodoni 72",Georgia,serif;font-size:1.25rem}
+  .pp{font-family:Georgia,serif;font-size:.72rem;color:var(--muted);line-height:1.45;margin-top:.5vh;font-style:normal}
+  .refs .rp{font-family:-apple-system,sans-serif;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-right:.3vw}
+  .pill .refs a{font-size:.74rem;margin-right:1.2vw;line-height:1.75}
+  .fact td{padding:.75vh .9vw}
+  .fact td.p{font-size:.92rem;width:30ch}
+  .fact td.i{font-size:.76rem;color:var(--muted)}
+  .fact td.f{width:24ch;font-size:.72rem}
+  .st{font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--ink);padding:.2vh .5vw;white-space:nowrap}
+
+  /* ---- interactive layer ---- */
+  .chip{position:absolute;left:8vw;top:3.6vh;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);z-index:5}
+  .ctrl{position:absolute;right:8vw;top:3vh;display:flex;gap:.5vw;z-index:6}
+  .ctrl button{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:.56rem;
+    letter-spacing:.18em;text-transform:uppercase;background:#fff;border:1px solid var(--hair);color:var(--muted);
+    padding:.6vh .8vw;cursor:pointer}
+  .ctrl button:hover,.ctrl button.on{border-color:var(--ink);color:var(--ink)}
+  .frag{opacity:.1;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+  .frag.in{opacity:1;transform:none}
+  tr[data-goto]{cursor:pointer}
+  tr[data-goto]:hover td{background:var(--soft)}
+  tr[data-goto] td.r:after{content:"  →";color:var(--dim)}
+  .mixt tr:hover td{background:var(--soft)}
+  .overlay{position:fixed;inset:0;background:#fff;z-index:20;display:none;padding:8vh 8vw;overflow:auto}
+  .overlay.on{display:block}
+  .overlay h3{font-family:"Didot","Bodoni 72",Georgia,serif;font-weight:400;font-size:2rem;margin:0 0 3vh}
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2vh 2vw}
+  .menu-grid a{display:block;border:1px solid var(--hair);padding:1.4vh 1vw;color:var(--ink);text-decoration:none;cursor:pointer}
+  .menu-grid a:hover,.menu-grid a.cur{border-color:var(--ink)}
+  .menu-grid .mn{font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+  .menu-grid .mt{font-family:"Didot",Georgia,serif;font-size:1.05rem;margin-top:.4vh}
+  .keys td{border:0;border-bottom:1px solid var(--hair);padding:1vh 1vw;font-size:.9rem}
+  .keys td:first-child{font-family:-apple-system,sans-serif;font-size:.7rem;letter-spacing:.12em;width:16ch}
+  .notes{position:fixed;left:0;right:0;bottom:0;background:#111;color:#eee;z-index:15;display:none;
+    padding:2vh 8vw 2.4vh;font-size:.92rem;line-height:1.55;max-height:34vh;overflow:auto}
+  .notes.on{display:block}
+  .notes .nh{font-family:-apple-system,sans-serif;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#999;
+    display:flex;justify-content:space-between;margin-bottom:.8vh}
+  .donut{width:9vh;height:9vh;border-radius:50%;flex:none;
+    background:conic-gradient(var(--ink) 0 38.5%,var(--hair) 38.5% 100%);position:relative}
+  .donut:after{content:"";position:absolute;inset:22%;background:#fff;border-radius:50%}
+  .verify{display:inline-block;font-family:-apple-system,sans-serif;font-size:.5rem;letter-spacing:.16em;
+    text-transform:uppercase;border:1px dashed var(--dim);color:var(--muted);padding:.1vh .4vw;margin-left:.4vw;vertical-align:middle}
+  @media print{.ctrl,.chip,.notes,.overlay{display:none!important}}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+<!-- 1 -->
+<section class="slide">
+  <div class="cover-row"><div class="disc">PG</div><div class="for">Personal <b>channel</b> strategy</div></div>
+  <h1>puneetgbuilds</h1>
+  <div class="sub">YouTube, Instagram and Facebook</div>
+  <p class="small" style="margin-top:5vh">Five pillars, one for each part of his work: defence, entrepreneurship, investing, founder life and AI.</p>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <h1>Vision</h1>
+  <p class="lede" style="max-width:60ch">To make @puneetgbuilds the place where India's defence and AI future is explained by a founder and investor who has built inside it.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="cols">
+    <div>
+      <div class="trk-h">A strategic choice</div>
+      <h1 style="margin:0 0 2vh">Brand<br>Persona</h1>
+      <p class="small" style="max-width:30ch">Not a fact and not the vision: how the audience should experience him. Every word must be earned by his record.</p>
+    </div>
+    <div class="axes" style="height:58vh">
+      <div class="ax-line" style="left:33%;right:33%;top:50%;height:1px"></div>
+      <div class="ax-line" style="top:24%;bottom:24%;left:50%;width:1px"></div>
+      <div class="disc" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)">PG</div>
+      <div class="plbl" style="left:50%;top:0;transform:translateX(-50%);width:34ch;text-align:center"><div class="pw">Veteran</div><div class="pp">19 years building, 8 of them in defence technology. An industry veteran, not a military one.</div></div>
+      <div class="plbl" style="left:68%;top:50%;transform:translateY(-50%);width:24ch;text-align:left"><div class="pw">Credible</div><div class="pp">National Entrepreneurship Award, 2019 · ₹20 crore+ Series A, 2021 · an IIT Delhi-incubated company</div></div>
+      <div class="plbl" style="right:68%;top:50%;transform:translateY(-50%);width:24ch;text-align:right"><div class="pw">Strategic</div><div class="pp">Head of strategy at TAK · a Born Unicorn jury seat · his own decision frameworks</div></div>
+      <div class="plbl" style="left:50%;bottom:0;transform:translateX(-50%);width:34ch;text-align:center"><div class="pw">Approachable</div><div class="pp">Plain language; warm and self-deprecating, as in his own writing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="trk-h" style="text-align:center">Guardrails</div>
+  <div class="tree" style="height:44vh">
+    <div class="top">Anti<br>Positioning</div>
+    <div class="stem"></div>
+    <div class="bar"></div>
+    <div class="drop" style="left:16%"></div>
+    <div class="drop" style="left:50%"></div>
+    <div class="drop" style="left:84%"></div>
+    <div class="end" style="left:3%"><div>Sounding<br>Preachy</div><div class="pp" style="margin-top:1.2vh">Show the decision and the number; let the viewer draw the lesson.</div></div>
+    <div class="end" style="left:37%"><div>Pro-politics<br>Narrative</div><div class="pp" style="margin-top:1.2vh">Policy yes, party politics no. No side-taking, no praise of leaders.</div></div>
+    <div class="end" style="left:71%"><div>Typical<br>Motivator</div><div class="pp" style="margin-top:1.2vh">No advice without his own example, date or number behind it.</div></div>
+  </div>
+  <p class="note" style="margin:0 auto;text-align:center">What we refuse to sound like. Every script, title and thumbnail is checked against these three.</p>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <h2>Two channels, two jobs</h2>
+  <div class="two" style="margin-top:1vh">
+    <div class="card"><div class="fig">@puneetgbuilds</div>
+      <ul><li>His own voice: decisions, field stories, journey</li>
+      <li>Shorts, one post and one carousel a month</li>
+      <li>Made once, posted on YouTube, Instagram and Facebook at the same time</li>
+      <li>This deck</li></ul></div>
+    <div class="card soft"><div class="fig">Podcast with Puneet</div>
+      <ul><li>Guest conversations, 60–75 minutes</li>
+      <li>Its own YouTube channel and its own clips handle</li>
+      <li>A separate deck</li></ul></div>
+  </div>
+  <p class="note" style="margin-top:3vh">The personal channel is where his own view lives. The podcast is where other people's views live.</p>
+</section>
+
+<!-- 6 -->
+<section class="slide divider" style="align-items:center;text-align:center">
+  <h1>Content Strategy</h1>
+  <div class="sans" style="letter-spacing:.3em;font-size:.7rem;color:var(--dim)">YOUTUBE · INSTAGRAM</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="cols">
+    <h1 style="margin:0">Content<br>Index</h1>
+    <div>
+      <p class="small" style="margin:0 0 1.6vh">One track, five pillars: one for each domain. Counts are per month. Everything is made once and posted on all three platforms at the same time.</p>
+      <table class="idxt"><tr><th>#</th><th>Pillar</th><th>Domain</th><th>YouTube</th><th>Instagram</th><th>Facebook</th><th style="text-align:right">Slide</th></tr>
+      <tr data-goto="8"><td class="n">1</td><td class="p">The Strategic Affairs</td><td class="trk">Defence</td><td class="trk">Shorts · 4</td><td class="trk">Reels · 4</td><td class="trk">Reels · 4</td><td class="r">8</td></tr>
+<tr data-goto="9"><td class="n">2</td><td class="p">Startup Breakdown</td><td class="trk">Entrepreneurship</td><td class="trk">Shorts · 2<br>+ 1 carousel</td><td class="trk">Reels · 2<br>+ carousel</td><td class="trk">Reels · 2<br>+ carousel</td><td class="r">9</td></tr>
+<tr data-goto="10"><td class="n">3</td><td class="p">The Investor's Table</td><td class="trk">Investor</td><td class="trk">Shorts · 2</td><td class="trk">Reels · 2</td><td class="trk">Reels · 2</td><td class="r">10</td></tr>
+<tr data-goto="11"><td class="n">4</td><td class="p">Journey Decoded</td><td class="trk">Founder</td><td class="trk">Shorts · 2<br>+ 1 post</td><td class="trk">Reels · 2<br>+ post</td><td class="trk">Reels · 2<br>+ post</td><td class="r">11</td></tr>
+<tr data-goto="12"><td class="n">5</td><td class="p">AI Decoded</td><td class="trk">AI</td><td class="trk">Shorts · 2</td><td class="trk">Reels · 2</td><td class="trk">Reels · 2</td><td class="r">12</td></tr>
+<tr data-goto="13"><td class="n"></td><td class="p">Strategic Theme</td><td class="trk">every piece</td><td class="trk"></td><td class="trk"></td><td class="trk"></td><td class="r">13</td></tr>
+<tr data-goto="16"><td class="n"></td><td class="p">Why: growth &amp; engagement</td><td class="trk">the whole plan</td><td class="trk"></td><td class="trk"></td><td class="trk"></td><td class="r">16</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide pillslide">
+  <div class="pill">
+    <div>
+      <div class="idx">01</div>
+      <h1>The<br>Strategic Affairs</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Defence</b><br>4 shorts a month<br>Made once, posted on all three platforms at the same time</div>
+      <div class="side"><h4>Recurring formats</h4><p>War Breakdown · Defence Gaps · Versus · Weapon of the Week · On Ground Stories</p><h4>Proof</h4><p>TAK Technologies, 2008–2016: head of strategy, then built the DarVi night-vision and thermal line</p></div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4><p>India's security seen by someone who built inside it: how policy, geopolitics and defence technology shape the country, and where India leads or lags.</p></div>
+      <div class="block"><h4>What the ideas are · one short each</h4><ul class="eps"><li>Kargil: the 3 decisions that changed the outcome of the war</li><li>Russia's share of India's arms imports fell from 70% to 40% in a decade. Who replaced it?</li><li>How far behind China is India on drones, and can it catch up?</li><li>How one Red Sea chokepoint moves global shipping costs</li><li>Why running defence systems on foreign AI models is a sovereign threat</li></ul></div>
+      <div class="block"><h4>Strategic theme</h4><p>The decision behind the event: what was decided, what failed, and how we would solve it today.</p></div>
+      <div class="block accent"><h4>Why · growth and engagement</h4><p>Defence and geopolitics move with the news, so shorts here are the main way new viewers find the channel. Versus and Weapon of the Week are repeatable series that build a weekly habit of coming back.</p></div>
+      <div class="refs"><h4>References</h4><a href="https://youtu.be/QjfziCCxvP4" target="_blank"><span class="rp">YouTube</span> What really happened in the Kargil War, 1999</a><a href="https://www.youtube.com/watch?v=JoOngBhtf1M" target="_blank"><span class="rp">YouTube</span> Perun: the military equipment cost problem</a><a href="https://www.youtube.com/watch?v=HiNwV48JZ1A" target="_blank"><span class="rp">YouTube</span> Gunners Shot: galvanising India's defence industrial base</a><a href="https://www.youtube.com/playlist?list=PLbTNGTpUDIOxsThF1q_K8O88xGGaSuGrA" target="_blank"><span class="rp">YouTube</span> The Sandeep Unnithan Show</a><a href="https://www.instagram.com/defenceminindia" target="_blank"><span class="rp">Instagram</span> Ministry of Defence, India: weekly wrap</a><a href="https://www.instagram.com/reel/DXHW5h6gR7G/" target="_blank"><span class="rp">Instagram</span> Aanya Mehta: India's quantum network</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide pillslide">
+  <div class="pill">
+    <div>
+      <div class="idx">02</div>
+      <h1>Startup<br>Breakdown</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Entrepreneurship</b><br>2 shorts + 1 carousel a month<br>Made once, posted on all three platforms at the same time</div>
+      <div class="side"><h4>Recurring formats</h4><p>Defence Startup Decoded · company breakdowns</p><h4>Proof</h4><p>Clensta, IIT Delhi-incubated · ₹100 crore ARR, 2024 (company-reported) · 5 patents on record · National Entrepreneurship Award, 2019</p></div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4><p>How Indian startups win or lose, with the defence and deep-tech lens he knows from the inside: one decision and one number at a time.</p></div>
+      <div class="block"><h4>What the ideas are · one short each</h4><ul class="eps"><li>How does a startup win its first defence contract?</li><li>iDEX: 548 contracts since 2018. What happened to the startups?</li><li>How an IIT Delhi-incubated company reached ₹100 crore ARR</li><li>Five patents, one company: what a patent is really worth</li></ul></div>
+      <div class="block"><h4>Strategic theme</h4><p>One decision and one sourced number per piece.</p></div>
+      <div class="block accent"><h4>Why · growth and engagement</h4><p>A breakdown gives the viewer something to keep, so it gets saved and shared, and a short that ends on one clear number is built to be rewatched. It turns defence viewers into founders who follow for the business lens.</p></div>
+      <div class="refs"><h4>References</h4><a href="https://www.youtube.com/shorts/32WlVPP8Q_o" target="_blank"><span class="rp">YouTube Shorts</span> 7 Cr to 3000 Cr: Aman Gupta on boAt's revenue journey</a><a href="https://www.youtube.com/watch?v=k-51exmR9R4" target="_blank"><span class="rp">YouTube</span> Think School: why Indian startups fail</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide pillslide">
+  <div class="pill">
+    <div>
+      <div class="idx">03</div>
+      <h1>The<br>Investor's Table</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Investor</b><br>2 shorts a month<br>Made once, posted on all three platforms at the same time</div>
+      <div class="side"><h4>Recurring formats</h4><p>Jury notes · deck teardown · capital explainers</p><h4>Proof</h4><p>Born Unicorn Season 1 jury, Sep–Oct 2026 · Clensta's ₹20 crore+ Series A, Dec 2021</p></div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4><p>The other side of the pitch: how investors and juries decide, the red flags, and why good companies still get a no.</p></div>
+      <div class="block"><h4>What the ideas are · one short each</h4><ul class="eps"><li>From the Top 30 to the final six: what a jury actually weighs</li><li>Why do good companies still get a no?</li><li>The first question I ask every founder</li><li>A red flag I see in most pitch decks</li></ul></div>
+      <div class="block"><h4>Strategic theme</h4><p>Both sides of the table: he has raised capital and he has judged.</p></div>
+      <div class="block accent"><h4>Why · growth and engagement</h4><p>Questions like "what would you answer?" invite comments, and founders tag their co-founders. It brings in the audience every founder brand needs: people raising money.</p></div>
+      <div class="refs"><h4>References</h4><a href="https://www.youtube.com/watch?v=jOQkZ6dQrbk" target="_blank"><span class="rp">YouTube</span> SeedToScale × Elevation Capital: how investors evaluate startups</a><a href="https://www.youtube.com/watch?v=fnwmK3Zovdk" target="_blank"><span class="rp">YouTube</span> Top VCs share their investment checklist</a><a href="https://www.instagram.com/p/DdQ7HO8OG29/" target="_blank"><span class="rp">Instagram</span> Liran Wizman: announcing a partnership and its backing</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide pillslide">
+  <div class="pill">
+    <div>
+      <div class="idx">04</div>
+      <h1>Journey<br>Decoded</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">Founder</b><br>2 shorts + 1 post a month<br>Made once, posted on all three platforms at the same time</div>
+      <div class="side"><h4>Recurring formats</h4><p>Founder's Playbook · Strategic Frameworks</p><h4>Proof</h4><p>Close to 1,000 people hired · nine roles, 2007–2026 · stepped down as Clensta CEO, 2025</p></div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4><p>A candid series on the decisions and lessons from his own journey: building, hiring, the board, stepping down, and the frameworks he still uses.</p></div>
+      <div class="block"><h4>What the ideas are · one short each</h4><ul class="eps"><li>What close to 1,000 hires taught me about the first ten</li><li>Why I stepped down as CEO, and what I would tell a founder facing the same call</li><li>Two friends selected by the Army: one served, one went on to build</li><li>The decision framework I used to step down as CEO</li></ul></div>
+      <div class="block"><h4>Strategic theme</h4><p>The real decision, with the number and what it cost.</p></div>
+      <div class="block accent"><h4>Why · growth and engagement</h4><p>People subscribe to a person, not a topic. Personal stories build the trust that turns a viewer into a follower, and they drive comments and profile visits.</p></div>
+      <div class="refs"><h4>References</h4><a href="https://youtu.be/q554XAT8x-c" target="_blank"><span class="rp">YouTube</span> Ritesh Agarwal: the truth about building a business in the US</a><a href="https://www.instagram.com/reel/DVQLqlcEqlt/" target="_blank"><span class="rp">Instagram</span> Aman Gupta: what an MBA really gave him</a><a href="https://www.instagram.com/reel/C0WYxizSjb1/" target="_blank"><span class="rp">Instagram</span> Manish Chowdhary, founder story</a><a href="https://www.instagram.com/reel/DYrlaZaN8r4/" target="_blank"><span class="rp">Instagram</span> Ishaan Mudgal, decision framework</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide pillslide">
+  <div class="pill">
+    <div>
+      <div class="idx">05</div>
+      <h1>AI Decoded</h1>
+      <div class="meta"><b style="color:var(--ink);font-weight:600">AI</b><br>2 shorts a month<br>Made once, posted on all three platforms at the same time</div>
+      <div class="side"><h4>Recurring formats</h4><p>Vision 2035 · AI in 60 Seconds</p><h4>Proof</h4><p>DBA in Generative AI, Golden Gate University (in progress) · founder of a stealth AI venture (no names)</p></div>
+    </div>
+    <div>
+      <div class="block"><h4>The idea</h4><p>AI for decision-makers: what it means for national security, for business, and for India owning its own technology. Themes only.</p></div>
+      <div class="block"><h4>What the ideas are · one short each</h4><ul class="eps"><li>Who owns India's compute?</li><li>The AI stack India must own by 2035</li><li>What an AI model actually costs to run</li><li>Why data ownership is the new border</li></ul></div>
+      <div class="block"><h4>Strategic theme</h4><p>Who owns it, what it costs, and what it changes.</p></div>
+      <div class="block accent"><h4>Why · growth and engagement</h4><p>AI pulls in an audience that would never follow a defence page. Explainers are evergreen, so they keep earning search views long after they are published.</p></div>
+      <div class="refs"><h4>References</h4><a href="https://www.youtube.com/watch?v=8YgwJHTwAms" target="_blank"><span class="rp">YouTube</span> Nandan Nilekani: India will lead in scaling AI (Bloomberg)</a><a href="https://www.youtube.com/watch?v=Oz7dfpABY1Y" target="_blank"><span class="rp">YouTube</span> Perplexity AI case study</a><a href="https://youtu.be/hjVama9Id8M" target="_blank"><span class="rp">YouTube</span> Can India hit the $10 trillion GDP goal?</a><a href="https://www.instagram.com/reel/DVqNNlJjaAQ/" target="_blank"><span class="rp">Instagram</span> AI and the future of SaaS</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="trk-h" style="text-align:center">Every short, post and carousel</div>
+  <h2 style="text-align:center">Strategic Theme</h2>
+  <div class="loop">
+    <div class="box"><h4>The Moment</h4><p>A real event, date or number: the hook</p></div>
+    <div class="arr frag" data-s="1">→</div>
+    <div class="box frag" data-s="1"><h4>The Context</h4><p>What happened and why it matters</p></div>
+    <div></div><div></div><div class="arr v frag" data-s="2">↓</div>
+    <div class="box frag" data-s="3"><h4>The Takeaway</h4><p>What it means for India, a founder, you</p></div>
+    <div class="arr frag" data-s="3">←</div>
+    <div class="box frag" data-s="2"><h4>The Insider View</h4><p>The decision, from his own record</p></div>
+  </div>
+  <p class="note" style="margin:3vh auto 0;text-align:center">One arc across all five pillars, so every piece feels like the same channel.</p>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <h2>Monthly Cadence &amp; Mix</h2>
+  <table class="mixt">
+    <tr><th>Pillar</th><th>Weeks</th><th>YouTube Shorts · 12</th><th>Instagram Reels · 12</th><th>Facebook Reels · 12</th></tr>
+    <tr><td class="p">The Strategic Affairs <span class="small">· defence</span></td><td>every week</td><td>4</td><td>4</td><td>4</td></tr>
+    <tr><td class="p">Startup Breakdown <span class="small">· entrepreneurship</span></td><td>weeks 1, 3</td><td>2</td><td>2</td><td>2</td></tr>
+    <tr><td class="p">The Investor's Table <span class="small">· investor</span></td><td>weeks 1, 3</td><td>2</td><td>2</td><td>2</td></tr>
+    <tr><td class="p">Journey Decoded <span class="small">· founder</span></td><td>weeks 2, 4</td><td>2</td><td>2</td><td>2</td></tr>
+    <tr><td class="p">AI Decoded <span class="small">· AI</span></td><td>weeks 2, 4</td><td>2</td><td>2</td><td>2</td></tr>
+    <tr><td class="p">Monthly post <span class="small">· Journey Decoded</span></td><td>week 3</td><td>1 · Posts tab</td><td>1 · feed post</td><td>1 · photo post</td></tr>
+    <tr><td class="p">Monthly carousel <span class="small">· Startup Breakdown</span></td><td>week 2</td><td>1 · Posts tab, up to 10 images</td><td>1 · carousel</td><td>1 · multi-photo post</td></tr>
+  </table>
+  <div class="grid g3" style="margin-top:3vh">
+    <div><div class="meta">One short, three platforms</div><p style="margin:.6vh 0 0">12 shorts, 1 post and 1 carousel a month. Each is made once and uploaded to all three platforms at the same time; nothing is made separately</p></div>
+    <div><div class="meta">The balance</div><p style="margin:.6vh 0 0">4 of 12 shorts (one in three) are defence, one every week; the other four pillars alternate in pairs</p></div>
+    <div><div class="meta">Not counted here</div><p style="margin:.6vh 0 0">The podcast and its clips run on their own channels</p></div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide">
+  <h2>Process</h2>
+  <div class="proc">
+    <div class="stage"><div class="hd">Pre Prod</div><ul><li>Strategy</li><li>Ideation</li><li>Keyword Research</li><li>Content Research</li><li>Scripting</li><li>Audio Cloning</li><li>Video Cloning</li></ul></div>
+    <div class="stage"><div class="hd">Prod</div><ul><li>Locations</li><li>Setup</li><li>Equipment</li><li>Shooting</li><li>Content Direction</li></ul></div>
+    <div class="stage"><div class="hd">Post Prod</div><ul><li>Editing</li><li>Covers/Thumbnails</li><li>Titles</li><li>Same-time upload to all three</li><li>Captions/Descriptions</li></ul></div>
+    <div class="stage"><div class="hd">Post Publish</div><ul><li>Tracking of Key Metrics</li><li>Monthly Actionable Reports</li></ul></div>
+  </div>
+  <p class="note accent" style="margin-top:3vh;font-style:normal;color:var(--ink)">Two checks before
+  anything publishes: every fact traced to his public record, and Puneet's explicit yes.</p>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <div class="trk-h">Why · growth and engagement</div>
+  <h2>Why this plan grows the channel</h2>
+  <div class="proc why"><div class="stage frag"><div class="hd">Discover</div><ul><li>Shorts on defence and AI, tied to the news, on all three platforms at once</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: views, reach, new viewers</li></ul></div><div class="stage frag"><div class="hd">Watch</div><ul><li>Every short built on the Moment → Takeaway arc, so viewers stay to the end</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: average view duration, retention</li></ul></div><div class="stage frag"><div class="hd">Engage</div><ul><li>Investor questions invite comments; breakdown shorts get saved and shared</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: comments, saves, shares</li></ul></div><div class="stage frag"><div class="hd">Follow</div><ul><li>Five recognisable pillars and weekly series; links across to the podcast</li><li style="color:var(--muted);font-size:.74rem;line-height:1.5;margin-top:1vh">Measured by: subscribers and followers gained</li></ul></div></div>
+  <p class="note accent" style="margin-top:3vh;font-style:normal;color:var(--ink)">His own LinkedIn export (Oct 2025 – Oct 2026) points the same way: his highest engagement-rate post, 19.22%, was a real scene with a lesson; a broad national-impact post drew 74,295 impressions at 0.21%. The target is depth, not reach.</p>
+</section>
+
+<!-- 17 -->
+<section class="slide divider">
+  <div class="trk-h">For your decision</div>
+  <h1>Three answers<br>to move ahead.</h1>
+  <ul class="bul" style="margin-top:2vh"><li>Is the vision right?</li><li>Are these the five pillars?</li><li>Is one short in three on defence the right balance?</li></ul>
+</section>
+
+<!-- 18 -->
+<section class="slide">
+  <div class="trk-h">Appendix</div>
+  <h2>The record behind every number</h2>
+  <table class="ptab fact">
+    <tr><th>On the slides</th><th>Source</th><th>Status</th></tr>
+    <tr><td class="p">Clensta was IIT Delhi-incubated</td><td class="i">YourStory, Dec 2020 · FITT IIT Delhi annual report 2019-20</td><td class="f"><span class="st">Verified</span></td></tr><tr><td class="p">₹100 crore ARR, 2024</td><td class="i">His post, Mar 2024 · Outlook Business, Mar 2024 (Inc42: FY24 revenue ₹78 crore)</td><td class="f"><span class="st">Company-reported</span></td></tr><tr><td class="p">5 patents</td><td class="i">Five patent titles on his profile (filings stated as 15–20+)</td><td class="f"><span class="st">On record</span></td></tr><tr><td class="p">National Entrepreneurship Award, 2019</td><td class="i">Ministry of Skill Development &amp; Entrepreneurship, NEA 2019 brochure</td><td class="f"><span class="st">Verified</span></td></tr><tr><td class="p">₹20 crore+ Series A, Dec 2021</td><td class="i">Tech Observer · IndianStartupNews, Dec 2021</td><td class="f"><span class="st">Verified</span></td></tr><tr><td class="p">Stepped down as Clensta CEO, 2025</td><td class="i">His LinkedIn post, Jul 2025 (role ended Mar 2025); buyer not public</td><td class="f"><span class="st">Verified</span></td></tr><tr><td class="p">TAK Technologies and DarVi, 2008–2016</td><td class="i">His LinkedIn profile: head of strategy, then core team; not a founder of TAK</td><td class="f"><span class="st">Self-reported</span></td></tr><tr><td class="p">Close to 1,000 people hired</td><td class="i">His own post, 2026</td><td class="f"><span class="st">Self-reported</span></td></tr><tr><td class="p">Born Unicorn Season 1 jury</td><td class="i">The show's announcement · his post, Sep 2026</td><td class="f"><span class="st">Verified</span></td></tr><tr><td class="p">DBA in Generative AI, Golden Gate University</td><td class="i">His website and posts; in progress</td><td class="f"><span class="st">Self-reported</span></td></tr><tr><td class="p">19.22% and 74,295 impressions</td><td class="i">His LinkedIn analytics export, Oct 2025 – Oct 2026</td><td class="f"><span class="st">Internal</span></td></tr><tr><td class="p">70% → 40% Russian share; iDEX 548 contracts</td><td class="i">SIPRI fact sheet, 2026 · Financial Express, Feb 2026</td><td class="f"><span class="st">Verified Oct 2026</span></td></tr>
+  </table>
+  <p class="note" style="margin-top:1.6vh">Checked 26 October 2026. "Self-reported" facts are his own public statements; nothing goes on camera without his yes.</p>
+</section>
+
+<div class="chip" id="chip"></div>
+<div class="ctrl"><button id="bmenu" title="Slide menu (M)">Menu</button><button id="bnotes" title="Speaker notes (N)">Notes</button><button id="bfull" title="Fullscreen (F)">Full screen</button><button id="bhelp" title="Keys (?)">?</button></div>
+<div class="mono-mini">PG</div>
+<div class="wordmark">puneetgbuilds · content strategy</div>
+<div class="pagenum" id="pg">1 / 18</div>
+<div class="bar" id="bar"></div>
+</div>
+<div class="overlay" id="menu"><h3>All slides</h3><div class="menu-grid" id="mgrid"></div></div>
+<div class="overlay" id="help"><h3>Presenting</h3><table class="keys">
+<tr><td>→ · SPACE · CLICK RIGHT</td><td>Next step or slide (some slides reveal step by step)</td></tr>
+<tr><td>← · CLICK LEFT</td><td>Back</td></tr>
+<tr><td>M</td><td>Slide menu: jump to any slide</td></tr>
+<tr><td>N</td><td>Speaker notes and a running timer (for the presenter's screen)</td></tr>
+<tr><td>F</td><td>Full screen</td></tr>
+<tr><td>INDEX ROWS</td><td>Click any row on a Content Index to jump to that slide</td></tr>
+<tr><td>ESC</td><td>Close any panel</td></tr></table></div>
+<div class="notes" id="notes"><div class="nh"><span id="nslide"></span><span>Elapsed <span id="ntime">0:00</span></span></div><div id="ntext"></div></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var NOTES={"1": "<b>Say:</b> \"This is the plan for your own channels, @puneetgbuilds, on YouTube and Instagram. Five pillars, one for each part of your work. The podcast has its own plan.\"", "2": "<b>Say:</b> \"One sentence for both platforms. The first half is the edge, the second is the credibility.\"", "3": "<b>Say:</b> \"This isn't a fact and it isn't the vision. It's how we want people to experience you, and every word has to be earned by your record. Veteran: nineteen years building, eight in defence technology, an industry veteran, not a military one. Credible: the 2019 National Entrepreneurship Award, the Series A, an IIT Delhi-incubated company. Strategic: head of strategy at TAK, the jury seat, your own frameworks. Approachable: plain language, the way you already write.\" <b>If asked \"why Veteran?\":</b> it says depth of experience. The slide defines it so nobody reads it as military service.", "4": "<b>Say:</b> \"These are guardrails, the three things we refuse to sound like, and each has a test. Not preachy: show the decision and the number and let the viewer draw the lesson. No pro-politics narrative: policy yes, party politics no. Not a typical motivator: no advice without your own example behind it.\"", "5": "<b>Say:</b> \"This channel carries your own view; the podcast carries other people's. Separate handles, so each keeps its audience.\"", "6": "<b>Say:</b> \"Now the strategy itself, for YouTube, Instagram and Facebook.\"", "7": "<b>Say:</b> \"One track, five pillars, one per domain. Each month's shorts are made once and posted on YouTube, Instagram and Facebook. We never make separate content per platform. Then one strategic theme that every piece follows, and why it all grows the channel.\"", "8": "<b>The Strategic Affairs (Defence):</b> theme: the decision behind the event. Why: defence moves with   the news, so it is the main way new viewers find the channel; Versus and Weapon of the Week build a   weekly habit.", "9": "<b>Startup Breakdown (Entrepreneurship):</b> theme: one decision, one number. Why: breakdowns get   saved and shared. <b>Ask him:</b> \"What are you comfortable saying on camera about 2008\u20132016?\"", "10": "<b>The Investor's Table (Investor):</b> theme: both sides of the table. Why: questions invite   comments and founders tag co-founders. <b>Ask him:</b> \"What is the first question you ask every   founder?\" Write it down word for word.", "11": "<b>Journey Decoded (Founder):</b> theme: the real decision, with the number and the cost. Why:   people subscribe to a person, not a topic.", "12": "<b>AI Decoded (AI):</b> theme: who owns it, what it costs, what it changes. Why: it pulls in an   audience that would never follow a defence page, and explainers keep earning search views. Themes   only, nothing about the current venture.", "13": "<b>Say:</b> \"Every short, post and carousel follows one arc: the moment, the context, your insider view, the takeaway. That is what makes five pillars feel like one channel.\"", "14": "<b>Say:</b> \"Twelve shorts a month, three a week, plus one post and one carousel. Every piece is made once and uploaded to YouTube, Instagram and Facebook at the same time. Strategic Affairs goes out every week; the other four pillars alternate in pairs. The carousel is a Startup Breakdown in week 2 and the post is a Journey Decoded in week 3. Four of the twelve shorts, one in three, are defence. The podcast is not counted here.\" <b>If asked about YouTube:</b> images and carousels go in the Posts tab (up to 10 images per post), not the Shorts shelf.", "15": "<b>Say:</b> \"Four stages from strategy to monthly reports. Every fact checked against your public record, nothing published without your yes.\"", "16": "<b>Say:</b> \"This is why it grows. Shorts, on all three platforms at once, bring people in; the arc keeps them watching; investor questions and breakdowns get comments, saves and shares; five recognisable pillars turn viewers into subscribers. Each stage has its own measure. Your own LinkedIn says the same thing: your highest engagement-rate post of the year, 19.22%, was a real scene with a lesson, while a broad national-impact post drew 74,295 impressions at 0.21%. We are aiming for depth, not reach.\"", "17": "<b>Say:</b> \"Three answers and we start on execution: is the vision right, are these the five pillars, and is one short in three on defence the right balance?\" <b>Then stop talking and write down his answers.</b>", "18": "<b>Use only if asked \"where does that number come from?\"</b> Every figure on the slides is listed with its source and status. Say plainly which are self-reported (his own public statements) and that \u20b9100 crore ARR is company-reported (Inc42 reported FY24 revenue of \u20b978 crore). Patents: 5 on his record; filings were 15\u201320+. Stepping down: announced July 2025, role ended March 2025; the buyer is not public, never name it. Defence years: TAK Technologies, head of strategy then core team building DarVi, not a founder of TAK.<br><br>---"}, SECS=["Personal channel", "Positioning", "Positioning", "Positioning", "Positioning", "Content strategy", "Content index", "Pillar 1 of 5 \u00b7 Defence", "Pillar 2 of 5 \u00b7 Entrepreneurship", "Pillar 3 of 5 \u00b7 Investor", "Pillar 4 of 5 \u00b7 Founder", "Pillar 5 of 5 \u00b7 AI", "Strategic theme", "Cadence", "Process", "Why \u00b7 growth & engagement", "Decision", "Appendix"];
+  var i=0,n=slides.length,t0=null;
+  var $=function(id){return document.getElementById(id);};
+  function frags(){return [].slice.call(slides[i].querySelectorAll('.frag'));}
+  function title(s){var h=s.querySelector('h1,h2,.top');if(!h)return '';var d=document.createElement('div');
+    d.innerHTML=h.innerHTML.replace(/<br\s*\/?>/gi,' ');return d.textContent.replace(/\s+/g,' ').trim();}
+  function show(k,back){
+    i=Math.max(0,Math.min(n-1,k));
+    slides.forEach(function(s,j){s.classList.toggle('on',j===i);});
+    frags().forEach(function(f){f.classList.toggle('in',!!back);});
+    $('pg').textContent=(i+1)+' / '+n;
+    $('bar').style.width=((i+1)/n*100)+'%';
+    $('chip').textContent=SECS[i]||'';
+    $('ntext').innerHTML=NOTES[i+1]||'<span style="color:#888">No notes for this slide.</span>';
+    $('nslide').textContent='Slide '+(i+1)+' · '+title(slides[i]);
+    if(history.replaceState){history.replaceState(null,'','#'+(i+1));}
+  }
+  function steps(){var m={};frags().forEach(function(x,j){var k=x.getAttribute('data-s');k=k===null?j:parseInt(k,10);
+    (m[k]=m[k]||[]).push(x);});return Object.keys(m).map(Number).sort(function(a,b){return a-b;}).map(function(k){return m[k];});}
+  function next(){var st=steps();for(var j=0;j<st.length;j++){if(!st[j][0].classList.contains('in')){
+    st[j].forEach(function(x){x.classList.add('in');});return;}}show(i+1);}
+  function prev(){var st=steps();for(var j=st.length-1;j>=0;j--){if(st[j][0].classList.contains('in')){
+    st[j].forEach(function(x){x.classList.remove('in');});return;}}show(i-1,true);}
+  function toggle(id,btn){var o=$(id).classList.toggle('on');if(btn)$(btn).classList.toggle('on',o);return o;}
+  function closeAll(){['menu','help'].forEach(function(x){$(x).classList.remove('on');});$('bmenu').classList.remove('on');}
+  // menu
+  var grid=$('mgrid');
+  slides.forEach(function(s,j){var a=document.createElement('a');
+    a.innerHTML='<div class="mn">'+(j+1)+' · '+(SECS[j]||'')+'</div><div class="mt">'+(title(s)||'—')+'</div>';
+    a.onclick=function(e){e.stopPropagation();closeAll();show(j);};grid.appendChild(a);});
+  function openMenu(){[].forEach.call(grid.children,function(a,j){a.classList.toggle('cur',j===i);});toggle('menu','bmenu');}
+  // index rows
+  [].forEach.call(document.querySelectorAll('tr[data-goto]'),function(r){
+    r.addEventListener('click',function(e){e.stopPropagation();show(parseInt(r.getAttribute('data-goto'),10)-1);});});
+  // buttons
+  $('bmenu').onclick=function(e){e.stopPropagation();openMenu();};
+  $('bnotes').onclick=function(e){e.stopPropagation();if(toggle('notes','bnotes')&&!t0)t0=Date.now();};
+  $('bfull').onclick=function(e){e.stopPropagation();fs();};
+  $('bhelp').onclick=function(e){e.stopPropagation();toggle('help');};
+  function fs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen();}else{document.exitFullscreen();}}
+  setInterval(function(){if(!t0)return;var s=Math.floor((Date.now()-t0)/1000);
+    $('ntime').textContent=Math.floor(s/60)+':'+('0'+s%60).slice(-2);},1000);
+  document.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='Escape'){closeAll();return;}
+    if($('menu').classList.contains('on')&&k!=='m'&&k!=='M'&&k!=='o'&&k!=='O')return;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();next();}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev();}
+    else if(k==='Home'){show(0);} else if(k==='End'){show(n-1);}
+    else if(k==='f'||k==='F'){fs();}
+    else if(k==='m'||k==='M'||k==='o'||k==='O'){openMenu();}
+    else if(k==='n'||k==='N'){if(toggle('notes','bnotes')&&!t0)t0=Date.now();}
+    else if(k==='?'||k==='h'||k==='H'){toggle('help');}
+  });
+  document.addEventListener('click',function(e){
+    if(e.target.closest('a,button,.overlay,.notes,tr[data-goto]'))return;
+    if(e.clientX>window.innerWidth*0.5){next();}else{prev();}
+  });
+  var tx=null;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;
+    if(Math.abs(d)>50){d<0?next():prev();}tx=null;});
+  var h=parseInt((location.hash||'').replace('#',''),10);show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

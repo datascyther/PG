@@ -1,0 +1,166 @@
+# Proper names that may appear in a draft, with the clearance flag.
+# Format: Name | FLAG
+#   OK            = publishable as-is
+#   PRESS-ATTRIB  = publishable only with the source named
+#   ASK           = needs Puneet's clearance first (third party's name)
+#   PAUSED        = never publish
+#   NDA           = never publish
+#
+# Anything not on this list fails G9. That is the point: a name that is not here
+# has not been cleared, so it does not go into a draft until somebody decides.
+
+# --- the founder, and the roles he owns in public
+Puneet Gupta | OK
+
+# --- institutions and platforms he has already named in public writing
+Indian Institute of Technology, Delhi | OK
+IIT Delhi | OK
+South Park Commons | OK
+Golden Gate University | OK
+Ambedkar Institute of Technology | OK
+IIT Madras | OK
+Business Standard | OK
+Silicon India | OK
+Inc42 | OK
+IndianStartupNews | OK
+BW Disrupt | OK
+Silicon India | OK
+IIT Madras | OK
+IIT Kanpur | OK
+
+# --- historical ventures (named in his own published posts, safe to use with a year anchor)
+Clensta | OK
+Honeywell | OK
+Defmate | OK
+
+# --- named individuals he has already published about
+Bhuvneshwar Kumar | OK
+Rangan Banerjee | OK
+Nikhil Agarwal | OK
+Mohammed Sirajuddin | OK
+Vidit Bhalotia | OK
+Alok Pandey | OK
+Ashutosh Pastor | OK
+Kiran Sabale | OK
+Pradeep Gupta | OK
+Anuj Khandelwal | OK
+Radhika Gupta | OK
+Nalin Moniz | OK
+Yuvraj Singh | OK
+Kumar Gaurav | OK
+Syed Adil Umair | OK
+Rahul Agarwal | OK
+Shammi Agarwal | OK
+Abhishek Goel | OK
+Vishal Nigam | OK
+Yogesh Thite | OK
+Vinod Khosla | OK
+Sam Altman | OK
+Sudhir Rajpal | ASK
+Jack Dorsey | ASK
+Prachi Kaushik | ASK
+Ashish Mishra | ASK
+Asha Tripathi | ASK
+Parineeti Chopra | ASK
+Hemanshi Tewari | ASK
+Dr Ajay Kumar | OK
+Akhilesh Sharma | ASK
+Prateek Mehta | OK
+Ankit Chowdhary | OK
+Rohan Choudhary | OK
+Harshit Madan | OK
+Ananya Roy | OK
+Ruchi Sanghvi | OK
+Aditya Agarwal | OK
+Tushar Garg | OK
+Sourav | OK
+Amitesh Shah | OK
+Nirmala Sitharaman | ASK
+Ankita Arora | ASK
+Anurag Rathore | ASK
+V Ramgopal Rao | OK
+
+# --- current venture. Never publish, in any spelling. Blocked by G13.
+# Muse | NDA
+# Maia | NDA
+# IUVA Labs | NDA
+
+# --- variants the name gate matches on (multi-word names split at commas)
+Indian Institute of Technology | OK
+Times 40 Under 40 | OK
+National Entrepreneurship Award | OK
+Entrepreneur of the Year NewsTV18 | OK
+ET Rise | OK
+Business World | OK
+TiE | OK
+CII | OK
+PwC | OK
+Department for International Trade | OK
+Stanford | OK
+IIT Bombay | OK
+
+# --- Startup Pedia category taxonomy (our own labels, not third-party names)
+Startup News | OK
+Funding News | OK
+Trending News | OK
+Startup Stories | OK
+Young Entrepreneur | OK
+Her Story | OK
+SMB's | OK
+Farming | OK
+Startup Learning | OK
+Case Study | OK
+Tech & Innovation | OK
+Industry Insights | OK
+
+# --- places (geography is not a clearance issue)
+Delhi | OK
+New Delhi | OK
+Noida | OK
+Bengaluru | OK
+Bangalore | OK
+Gurugram | OK
+Mumbai | OK
+India | OK
+Israel | OK
+Gujarat | OK
+Ahmedabad | OK
+Sanand | OK
+Dholera | OK
+Bavaliyari | OK
+Haryana | OK
+West Bengal | OK
+Kolkata | OK
+Chennai | OK
+Times | OK
+Doctor | OK
+Generative | OK
+
+# --- Born Unicorn Season 1 (public, named in his own published posts)
+Born Unicorn | OK
+Spolyn | OK
+AIC | OK
+McKinsey & Company | OK
+Google | OK
+Conscient Sports LLP | OK
+
+Google | OK
+McKinsey & Company | OK
+
+# --- Born Unicorn Season 1 public record (press + the show's own page)
+RASA Group | OK
+Manav Aggarwal | OK
+Organic Harvest | OK
+AIC IIT Delhi | OK
+Atal Incubation Centre | OK
+Canton Fair | OK
+Guangzhou | OK
+Sonipat | OK
+Haryana | OK
+Spolyn | OK
+Vinay Dangi | OK
+EVXPERTZ | OK
+Manju Verma | OK
+Chennai | OK
+Hyderabad | OK
+Next Unicorn | OK

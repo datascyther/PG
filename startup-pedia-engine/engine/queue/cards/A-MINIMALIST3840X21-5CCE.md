@@ -1,0 +1,26 @@
+# Extraction card — minimalist-3840x2160-20818.jpg
+
+- asset_id: A-MINIMALIST3840X21-5CCE
+- path: /Users/mymac/Downloads/minimalist-3840x2160-20818.jpg
+- duration_s: 0.0
+- resolution: 3840x2160
+- audio: no
+- size_mb: 5.42
+
+## Frames
+
+## Facts to fill (one line each — no line, no post)
+
+- date:
+- place:
+- who:
+- what_happened:
+- quotable_line:
+- number:
+- source:
+
+## Verdict
+
+- worth a post: yes / no
+- which moment_id: (M-xx from the bank, or new N-xx)
+- which receipt_id: (R-xx, or new)

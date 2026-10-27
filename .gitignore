@@ -1,0 +1,21 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.bak
+
+# raw camera files and big binaries (originals stay on disk, not in git)
+*.HEIC
+*.heic
+*.mov
+*.mp4
+
+# generated output: rebuilt by the engines
+startup-pedia-engine/engine/queue/frames/
+startup-pedia-engine/engine/carousels/**/*.pdf
+youtube-instagram-engine/presentation/*.pdf
+
+# loose root exports
+/Founders Who Execute Through Uncertainty.png
+
+# old backups
+puneet-linkedin-dossier/12_*.backup.md
